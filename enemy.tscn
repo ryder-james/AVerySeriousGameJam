@@ -16,7 +16,7 @@ radius = 400.0
 [node name="Enemy" type="RigidBody2D" unique_id=735133087 groups=["Beyblade", "Enemy"]]
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_gqbix")
-gravity_scale = -1.0
+gravity_scale = -0.2
 inertia = 0.1
 script = ExtResource("1_4gyqm")
 
