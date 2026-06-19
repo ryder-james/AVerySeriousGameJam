@@ -39,3 +39,9 @@ shape = SubResource("WorldBoundaryShape2D_71pa8")
 z_index = -1000
 position = Vector2(7500, 0)
 texture = ExtResource("7_71pa8")
+
+[node name="Bg" type="Sprite2D" parent="Bg" unique_id=234830416]
+z_index = -1000
+position = Vector2(16000, 0)
+rotation = 3.1415927
+texture = ExtResource("7_71pa8")

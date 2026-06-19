@@ -29,5 +29,4 @@ shape = SubResource("CircleShape2D_ujo3m")
 zoom = Vector2(0.785, 0.785)
 limit_top = 0
 limit_bottom = 0
-position_smoothing_enabled = true
 position_smoothing_speed = 10.0
