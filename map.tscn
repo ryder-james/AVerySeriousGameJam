@@ -17,7 +17,10 @@ normal = Vector2(0, 1)
 [node name="Map" type="Node2D" unique_id=1178941056]
 
 [node name="Beyblade" parent="." unique_id=414612044 instance=ExtResource("1_e0an3")]
+process_mode = 4
 position = Vector2(136, 0)
+max_launch_power = 800.0
+gravity_force = 50.0
 
 [node name="Launcher" parent="." unique_id=2113441394 instance=ExtResource("2_p5pve")]
 position = Vector2(35, 0)
@@ -48,4 +51,5 @@ rotation = 3.1415927
 texture = ExtResource("7_71pa8")
 
 [node name="Enemy" parent="." unique_id=1776879099 instance=ExtResource("4_p5pve")]
-position = Vector2(760, 5)
+position = Vector2(1984, 5)
+gravity_force = 100.0

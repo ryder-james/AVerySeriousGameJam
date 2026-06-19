@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dc5slvb8uo1vp"]
 
 [ext_resource type="Script" uid="uid://co2jq7dwmmeci" path="res://enemy.gd" id="1_4gyqm"]
-[ext_resource type="Texture2D" uid="uid://dwfc8ib2p6olc" path="res://beyblade/beyblade.png" id="2_67e6m"]
+[ext_resource type="Texture2D" uid="uid://dot4edvib1brr" path="res://beyblade/beyblade.png" id="2_67e6m"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gqbix"]
 friction = 0.0
@@ -10,8 +10,14 @@ bounce = 0.6
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujo3m"]
 radius = 47.26521
 
-[node name="Enemy" type="StaticBody2D" unique_id=1776879099 groups=["Enemy"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_4gyqm"]
+radius = 400.0
+
+[node name="Enemy" type="RigidBody2D" unique_id=735133087 groups=["Beyblade", "Enemy"]]
+mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_gqbix")
+gravity_scale = -1.0
+inertia = 0.1
 script = ExtResource("1_4gyqm")
 
 [node name="Visual" type="Sprite2D" parent="." unique_id=1297228985]
@@ -20,3 +26,10 @@ texture = ExtResource("2_67e6m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1437595302]
 shape = SubResource("CircleShape2D_ujo3m")
+
+[node name="Gravity" type="Area2D" parent="." unique_id=754239375]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gravity" unique_id=73401633]
+shape = SubResource("CircleShape2D_4gyqm")
+debug_color = Color(0.57633805, 0.4124641, 0.9417703, 0.41960785)
