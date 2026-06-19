@@ -17,6 +17,7 @@ normal = Vector2(0, 1)
 [node name="Map" type="Node2D" unique_id=1178941056]
 
 [node name="Beyblade" parent="." unique_id=414612044 instance=ExtResource("1_e0an3")]
+process_mode = 4
 position = Vector2(136, 0)
 
 [node name="Launcher" parent="." unique_id=2113441394 instance=ExtResource("2_p5pve")]

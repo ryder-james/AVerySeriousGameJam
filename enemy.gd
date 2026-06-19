@@ -1,15 +1,13 @@
-extends StaticBody2D
+extends RigidBody2D
 
 
-var rotation_speed: float = 0.0
-
-@onready var visual: Sprite2D = %Visual
+@export var max_speed: float = 1000.0
 
 
 func _ready() -> void:
-	rotation_speed = -randf_range(PI, TAU)
-	constant_angular_velocity = deg_to_rad(rotation_speed)
+	apply_torque_impulse(1000)
 
 
-func _process(delta: float) -> void:
-	visual.rotation = wrapf(visual.rotation + (rotation_speed * delta), 0, TAU)
+func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
+	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 1000)
+	linear_velocity = linear_velocity.limit_length(allowable_speed)
