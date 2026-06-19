@@ -1,23 +1,12 @@
 [gd_scene format=3 uid="uid://dsvuxkanp4mji"]
 
-[ext_resource type="Texture2D" uid="uid://bcbar8y8eil7j" path="res://icon.svg" id="1_p5pve"]
-[ext_resource type="Script" uid="uid://dvgou34t5mt21" path="res://beyblade.gd" id="2_iw27f"]
-[ext_resource type="Texture2D" uid="uid://dwfc8ib2p6olc" path="res://beyblade.png" id="2_urblq"]
-[ext_resource type="Texture2D" uid="uid://do06tciq8ymv8" path="res://launcher.png" id="3_iw27f"]
-[ext_resource type="Script" uid="uid://b88xopbqawg6t" path="res://launcher.gd" id="3_urblq"]
-[ext_resource type="Texture2D" uid="uid://bck70l5ndvfq1" path="res://rectangle.png" id="4_71pa8"]
+[ext_resource type="PackedScene" uid="uid://bwpfbwm75cowr" path="res://beyblade/beyblade.tscn" id="1_e0an3"]
+[ext_resource type="PackedScene" uid="uid://dhgk3hubrdxdw" path="res://beyblade/launcher.tscn" id="2_p5pve"]
 [ext_resource type="Texture2D" uid="uid://cjwdr17fkjfje" path="res://bg.png" id="7_71pa8"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gqbix"]
-friction = 0.0
-bounce = 1.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ujo3m"]
-radius = 47.26521
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_71pa8"]
 friction = 0.0
-bounce = 0.95
+bounce = 0.6
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iw27f"]
 normal = Vector2(0, 1)
@@ -26,53 +15,11 @@ normal = Vector2(0, 1)
 
 [node name="Map" type="Node2D" unique_id=1178941056]
 
-[node name="Beyblade" type="RigidBody2D" parent="." unique_id=1860433388]
+[node name="Beyblade" parent="." unique_id=414612044 instance=ExtResource("1_e0an3")]
 position = Vector2(136, 0)
-physics_material_override = SubResource("PhysicsMaterial_gqbix")
-gravity_scale = 0.0
-lock_rotation = true
-continuous_cd = 2
-linear_damp_mode = 1
-script = ExtResource("2_iw27f")
-max_speed = 3000.0
 
-[node name="Visual" type="Sprite2D" parent="Beyblade" unique_id=1836628397]
-unique_name_in_owner = true
-texture = ExtResource("2_urblq")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Beyblade" unique_id=879947251]
-shape = SubResource("CircleShape2D_ujo3m")
-
-[node name="Camera2D" type="Camera2D" parent="Beyblade" unique_id=2089682332]
-
-[node name="Launcher" type="Node2D" parent="." unique_id=1502858411]
+[node name="Launcher" parent="." unique_id=2113441394 instance=ExtResource("2_p5pve")]
 position = Vector2(35, 0)
-script = ExtResource("3_urblq")
-max_offset = 112.0
-speed = 5.0
-
-[node name="LauncherBar" type="Sprite2D" parent="Launcher" unique_id=160113522]
-z_index = 1
-scale = Vector2(2.9000008, 2.9000008)
-texture = ExtResource("3_iw27f")
-
-[node name="LauncherSelector" type="Node2D" parent="Launcher" unique_id=370765681]
-unique_name_in_owner = true
-
-[node name="Rectangle" type="Sprite2D" parent="Launcher/LauncherSelector" unique_id=332747534]
-modulate = Color(0.14117648, 0.09411765, 0, 1)
-z_index = 1
-scale = Vector2(0.55426335, 0.12380949)
-texture = ExtResource("4_71pa8")
-
-[node name="Barrel" type="Node2D" parent="Launcher" unique_id=1615569498]
-unique_name_in_owner = true
-position = Vector2(107, 0)
-
-[node name="BarrelVisual" type="Sprite2D" parent="Launcher/Barrel" unique_id=1548836740]
-z_index = 1
-rotation = 1.5707964
-texture = ExtResource("1_p5pve")
 
 [node name="WallTop" type="StaticBody2D" parent="." unique_id=815846680]
 position = Vector2(0, -400)

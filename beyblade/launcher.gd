@@ -1,9 +1,6 @@
 extends Node2D
 
 
-signal launch(power: float, angle: float)
-
-
 @export_category("Launch Slider")
 @export var max_offset: float = 1.0
 @export var speed: float = 2.0
@@ -24,10 +21,9 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("launch"):
 		if !_stopped:
 			_stopped = true
-			launch.emit(_get_power(), _barrel.rotation)
+			Game.launch.emit(_get_power(), _barrel.rotation)
 		else:
-			print("reload")
-			get_tree().reload_current_scene()
+			Game.reset_game()
 	if not _stopped and Input.is_action_pressed("ccw"):
 		_barrel.rotation -= rotation_speed * delta
 	elif not _stopped and Input.is_action_pressed("cw"):

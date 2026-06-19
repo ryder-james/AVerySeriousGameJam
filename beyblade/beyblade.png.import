@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do06tciq8ymv8"
-path="res://.godot/imported/launcher.png-f9653dfbed7de1da71ab13f9a301fbe0.ctex"
+uid="uid://dwfc8ib2p6olc"
+path="res://.godot/imported/beyblade.png-719c5ea4151e87f00f05bc3aeb1f497f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://launcher.png"
-dest_files=["res://.godot/imported/launcher.png-f9653dfbed7de1da71ab13f9a301fbe0.ctex"]
+source_file="res://beyblade/beyblade.png"
+dest_files=["res://.godot/imported/beyblade.png-719c5ea4151e87f00f05bc3aeb1f497f.ctex"]
 
 [params]
 

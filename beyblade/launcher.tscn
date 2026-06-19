@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://dhgk3hubrdxdw"]
+
+[ext_resource type="Script" uid="uid://b88xopbqawg6t" path="res://beyblade/launcher.gd" id="1_uy6ji"]
+[ext_resource type="Texture2D" uid="uid://do06tciq8ymv8" path="res://beyblade/launcher.png" id="2_bm0ek"]
+[ext_resource type="Texture2D" uid="uid://bck70l5ndvfq1" path="res://rectangle.png" id="3_6i4n2"]
+[ext_resource type="Texture2D" uid="uid://bcbar8y8eil7j" path="res://icon.svg" id="4_rcfql"]
+
+[node name="Launcher" type="Node2D" unique_id=2113441394]
+script = ExtResource("1_uy6ji")
+max_offset = 112.0
+speed = 5.0
+
+[node name="LauncherBar" type="Sprite2D" parent="." unique_id=1458615144]
+z_index = 1
+scale = Vector2(2.9000008, 2.9000008)
+texture = ExtResource("2_bm0ek")
+
+[node name="LauncherSelector" type="Node2D" parent="." unique_id=1433370861]
+unique_name_in_owner = true
+
+[node name="Rectangle" type="Sprite2D" parent="LauncherSelector" unique_id=1661176949]
+modulate = Color(0.14117648, 0.09411765, 0, 1)
+z_index = 1
+scale = Vector2(0.55426335, 0.12380949)
+texture = ExtResource("3_6i4n2")
+
+[node name="Barrel" type="Node2D" parent="." unique_id=782295322]
+unique_name_in_owner = true
+position = Vector2(107, 0)
+
+[node name="BarrelVisual" type="Sprite2D" parent="Barrel" unique_id=1221824346]
+z_index = 1
+rotation = 1.5707964
+texture = ExtResource("4_rcfql")
