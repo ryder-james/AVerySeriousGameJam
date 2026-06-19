@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dhgk3hubrdxdw" path="res://beyblade/launcher.tscn" id="2_p5pve"]
 [ext_resource type="PackedScene" uid="uid://dc5slvb8uo1vp" path="res://enemy.tscn" id="4_p5pve"]
 [ext_resource type="PackedScene" uid="uid://cb1spbobf24cr" path="res://ui/end_run_menu.tscn" id="5_urblq"]
+[ext_resource type="PackedScene" uid="uid://by4wumt7yrhdh" path="res://ui/overlay_ui.tscn" id="6_iw27f"]
 [ext_resource type="Texture2D" uid="uid://cjwdr17fkjfje" path="res://bg.png" id="7_71pa8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_71pa8"]
@@ -20,7 +21,6 @@ normal = Vector2(0, 1)
 [node name="Beyblade" parent="." unique_id=414612044 instance=ExtResource("1_e0an3")]
 process_mode = 4
 position = Vector2(136, 0)
-max_launch_power = 800.0
 gravity_force = 50.0
 
 [node name="Launcher" parent="." unique_id=2113441394 instance=ExtResource("2_p5pve")]
@@ -60,3 +60,7 @@ layer = 100
 [node name="EndRunMenu" parent="CanvasLayer" unique_id=843066510 instance=ExtResource("5_urblq")]
 unique_name_in_owner = true
 visible = false
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=514601383]
+
+[node name="Overlay_Ui" parent="CanvasLayer2" unique_id=1788766066 instance=ExtResource("6_iw27f")]
