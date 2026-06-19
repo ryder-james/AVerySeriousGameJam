@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://bwpfbwm75cowr"]
 
 [ext_resource type="Script" uid="uid://dvgou34t5mt21" path="res://beyblade/beyblade.gd" id="1_e03yv"]
-[ext_resource type="Texture2D" uid="uid://dwfc8ib2p6olc" path="res://beyblade/beyblade.png" id="2_qg5uo"]
+[ext_resource type="Texture2D" uid="uid://dot4edvib1brr" path="res://beyblade/beyblade.png" id="2_qg5uo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gqbix"]
 friction = 0.0
 bounce = 0.6
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujo3m"]
-radius = 47.26521
+radius = 42.0
 
 [node name="Beyblade" type="RigidBody2D" unique_id=414612044]
 physics_material_override = SubResource("PhysicsMaterial_gqbix")
