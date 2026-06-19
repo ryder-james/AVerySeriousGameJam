@@ -1,7 +1,8 @@
 extends RigidBody2D
 
 
-@export var max_speed: float = 1000.0
+@export var max_speed: float = 3000.0
+@export var rotation_speed: float = 1500.0
 
 var speed: float = 0.0
 
@@ -17,4 +18,6 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	_visual.rotation = wrapf(linear_velocity.length() * 5 * -delta, -PI, PI)
+	var scaled_speed: float = linear_velocity.length() / max_speed
+	var vis_rotation: float = -scaled_speed * PI * 2 * rotation_speed * delta
+	_visual.rotation = wrapf(vis_rotation, -PI, PI)
