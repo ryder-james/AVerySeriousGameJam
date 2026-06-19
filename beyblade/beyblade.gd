@@ -5,7 +5,7 @@ extends RigidBody2D
 
 var speed: float = 0.0
 
-@onready var visual: Sprite2D = %Visual
+@onready var _visual: Sprite2D = %Visual
 
 
 func _ready() -> void:
@@ -14,3 +14,7 @@ func _ready() -> void:
 				speed = power * max_speed
 				apply_central_impulse((Vector2.RIGHT * speed).rotated(launch_angle))
 	)
+
+
+func _process(delta: float) -> void:
+	_visual.rotation = wrapf(linear_velocity.length() * 5 * -delta, -PI, PI)
