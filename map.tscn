@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bwpfbwm75cowr" path="res://beyblade/beyblade.tscn" id="1_e0an3"]
 [ext_resource type="PackedScene" uid="uid://dhgk3hubrdxdw" path="res://beyblade/launcher.tscn" id="2_p5pve"]
+[ext_resource type="PackedScene" uid="uid://dc5slvb8uo1vp" path="res://enemy.tscn" id="4_p5pve"]
 [ext_resource type="Texture2D" uid="uid://cjwdr17fkjfje" path="res://bg.png" id="7_71pa8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_71pa8"]
@@ -45,3 +46,6 @@ z_index = -1000
 position = Vector2(16000, 0)
 rotation = 3.1415927
 texture = ExtResource("7_71pa8")
+
+[node name="Enemy" parent="." unique_id=1776879099 instance=ExtResource("4_p5pve")]
+position = Vector2(760, 5)
