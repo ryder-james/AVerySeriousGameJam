@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://djx0audro2pmg"]
 
+[ext_resource type="Script" uid="uid://cp3tostk70tky" path="res://ui/main_menu.gd" id="1_t7e0r"]
+
 [node name="MainMenu" type="Node2D" unique_id=394547681]
+script = ExtResource("1_t7e0r")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=747687149]
 
@@ -30,13 +33,14 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 10
 
-[node name="Start" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=212951593]
+[node name="Start" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=560747583]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Start"
-horizontal_alignment = 1
 
-[node name="Settings" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1376380115]
+[node name="Settings" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=2000951847]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Settings"

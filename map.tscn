@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bwpfbwm75cowr" path="res://beyblade/beyblade.tscn" id="1_e0an3"]
 [ext_resource type="PackedScene" uid="uid://dhgk3hubrdxdw" path="res://beyblade/launcher.tscn" id="2_p5pve"]
 [ext_resource type="PackedScene" uid="uid://dc5slvb8uo1vp" path="res://enemy.tscn" id="4_p5pve"]
+[ext_resource type="PackedScene" uid="uid://cb1spbobf24cr" path="res://ui/end_run_menu.tscn" id="5_urblq"]
 [ext_resource type="Texture2D" uid="uid://cjwdr17fkjfje" path="res://bg.png" id="7_71pa8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_71pa8"]
@@ -49,3 +50,8 @@ texture = ExtResource("7_71pa8")
 
 [node name="Enemy" parent="." unique_id=1776879099 instance=ExtResource("4_p5pve")]
 position = Vector2(760, 5)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1817127367]
+visible = false
+
+[node name="EndRunMenu" parent="CanvasLayer" unique_id=843066510 instance=ExtResource("5_urblq")]

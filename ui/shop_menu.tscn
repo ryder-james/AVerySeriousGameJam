@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b017qwd2w7vf8"]
 
-[ext_resource type="Texture2D" uid="uid://coth0afsssikg" path="res://ui/shop_banner.png" id="1_6evd7"]
+[ext_resource type="Texture2D" uid="uid://coth0afsssikg" path="res://ui/imgs/shop_banner.png" id="1_6evd7"]
+[ext_resource type="Script" uid="uid://cj7ygmtr2bxy2" path="res://ui/shop_menu.gd" id="1_du5fs"]
 [ext_resource type="Texture2D" uid="uid://ciwv2ue4b2qry" path="res://ui/icons/launchspeed_icon.png" id="2_7t64a"]
 [ext_resource type="Texture2D" uid="uid://bwhl8ap5l5m0f" path="res://ui/icons/buy_icon.png" id="3_flcvk"]
 [ext_resource type="Texture2D" uid="uid://c6eqqaqekpojx" path="res://ui/icons/launchspin_icon.png" id="4_jdy6d"]
@@ -9,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b4diiqe3rdo76" path="res://ui/icons/rim_icon.png" id="7_winol"]
 
 [node name="ShopMenu" type="Node2D" unique_id=704457891]
+script = ExtResource("1_du5fs")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1126320280]
 
@@ -213,7 +215,8 @@ size_flags_vertical = 10
 theme_override_constants/separation = 600
 alignment = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1931722106]
+[node name="GoToGame" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1357694148]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Start Run"
 
