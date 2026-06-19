@@ -6,10 +6,11 @@ extends RigidBody2D
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
 
-var _targets := []
+var _targets: Array[Node2D] = []
 
 @onready var _gravity: Area2D = %Gravity
 @onready var _clash_ray: RayCast2D = %ClashRay
+@onready var _steering: SteeringController = %Steering
 
 
 func _ready() -> void:
@@ -44,23 +45,17 @@ func _physics_process(_delta: float) -> void:
 		var hit_body := _clash_ray.get_collider() as Node2D
 		if hit_body.is_in_group(&"Enemy"):
 			_clash_ray.enabled = false
-			get_tree().create_timer(0.5).timeout.connect(func(): _clash_ray.enabled = true)
+			get_tree().create_timer(0.75).timeout.connect(func(): _clash_ray.enabled = true)
 			Game.clash()
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
-	if not _targets.is_empty():
-		var avg_target_point := Vector2.ZERO
-		for target: Node2D in _targets:
-			var distance: float = (global_position.distance_to(target.global_position))
-			var strength: float = 1 - (distance / _gravity.get_child(0).shape.radius)
-			avg_target_point += target.global_position * strength
-		avg_target_point /= _targets.size()
-		var steering_dir := avg_target_point - global_position
-		apply_central_force(steering_dir * (gravity_force / max_speed))
-	
+	_steering.targets = _targets
+	apply_central_force(_steering.get_steering_vector(
+			gravity_force, _gravity.get_child(0).shape.radius, max_speed))
 	
 	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 10)
+	linear_velocity.x = max(linear_velocity.x, -200)
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
 	if linear_velocity.length() < 10:
 		linear_velocity = Vector2.ZERO
@@ -93,4 +88,6 @@ func _strike_enemy(enemy: Node) -> void:
 	enemy.angular_damp = 4.0
 	enemy.angular_damp_mode = DAMP_MODE_REPLACE
 	angular_damp = 0.0
+	angular_velocity *= 1.3
+	linear_velocity *= 1.3
 	get_tree().create_timer(3.0).timeout.connect(func(): angular_damp = 1.0)
