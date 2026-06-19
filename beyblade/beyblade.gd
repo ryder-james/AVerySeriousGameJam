@@ -21,7 +21,8 @@ func _ready() -> void:
 	)
 	_gravity.body_entered.connect(_on_gravity_entered)
 	_gravity.body_exited.connect(_on_gravity_exited)
-	_clash_zone.body_entered.connect(_on_clash_zone_body_entered)
+	body_entered.connect(_on_hit)
+	#_clash_zone.body_entered.connect(_on_clash_zone_body_entered)
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
@@ -55,14 +56,18 @@ func _on_gravity_exited(body: Node) -> void:
 		_targets.erase(body)
 
 
+func _on_hit(body:Node) -> void:
+	if body.is_in_group(&"Enemy"):
+		_strike_enemy(body as PhysicsBody2D)
+
+
 func _on_clash_zone_body_entered(body: Node) -> void:
 	if body.is_in_group(&"Enemy"):
-		_clash(body as PhysicsBody2D)
+		Game.clash()
 
 
-func _clash(enemy: PhysicsBody2D) -> void:
+func _strike_enemy(enemy: Node) -> void:
 	enemy.angular_damp = 4.0
 	enemy.angular_damp_mode = DAMP_MODE_REPLACE
 	angular_damp = 0.0
 	get_tree().create_timer(3.0).timeout.connect(func(): angular_damp = 1.0)
-	Game.clash()
