@@ -55,8 +55,8 @@ texture = ExtResource("7_71pa8")
 position = Vector2(760, 5)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1817127367]
-visible = false
+layer = 100
 
 [node name="EndRunMenu" parent="CanvasLayer" unique_id=843066510 instance=ExtResource("5_urblq")]
-position = Vector2(1984, 5)
-gravity_force = 100.0
+unique_name_in_owner = true
+visible = false

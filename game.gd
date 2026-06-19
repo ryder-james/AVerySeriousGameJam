@@ -29,4 +29,3 @@ func _unclash(camera: Camera2D, default_zoom: Vector2) -> void:
 	get_tree().paused = false
 	var tween := create_tween()
 	tween.tween_property(camera, "zoom", default_zoom, 0.1)
-
