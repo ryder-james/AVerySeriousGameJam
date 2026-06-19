@@ -9,7 +9,7 @@ extends RigidBody2D
 var _targets := []
 
 @onready var _gravity: Area2D = %Gravity
-@onready var _clash_ray: RayCast2D = %RayCast2D
+@onready var _clash_ray: RayCast2D = %ClashRay
 
 
 func _ready() -> void:
