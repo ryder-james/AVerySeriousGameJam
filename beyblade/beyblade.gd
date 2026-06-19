@@ -65,6 +65,7 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 	if linear_velocity.length() < 10:
 		linear_velocity = Vector2.ZERO
 		angular_velocity = 0.0
+		%EndRunMenu.visible = true
 		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 		set_deferred("freeze", true)
 
