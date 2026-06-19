@@ -2,7 +2,7 @@ extends RigidBody2D
 
 
 @export var max_speed: float = 1000.0
-@export var max_launch_power: float = 500.0
+@export var max_launch_power: float = 800.0
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
 

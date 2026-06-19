@@ -22,7 +22,6 @@ max_contacts_reported = 1
 angular_damp_mode = 1
 angular_damp = 1.0
 script = ExtResource("1_e03yv")
-max_launch_power = 2000.0
 gravity_force = 100.0
 clash_detection_distance = 60.0
 
