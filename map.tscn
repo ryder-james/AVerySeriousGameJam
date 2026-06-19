@@ -20,7 +20,7 @@ normal = Vector2(0, 1)
 process_mode = 4
 position = Vector2(136, 0)
 max_launch_power = 800.0
-gravity_force = 500.0
+gravity_force = 50.0
 
 [node name="Launcher" parent="." unique_id=2113441394 instance=ExtResource("2_p5pve")]
 position = Vector2(35, 0)
@@ -52,4 +52,4 @@ texture = ExtResource("7_71pa8")
 
 [node name="Enemy" parent="." unique_id=1776879099 instance=ExtResource("4_p5pve")]
 position = Vector2(1984, 5)
-gravity_force = 800.0
+gravity_force = 100.0
