@@ -1,23 +1,96 @@
 extends RigidBody2D
 
 
-@export var max_speed: float = 3000.0
-@export var rotation_speed: float = 1500.0
+@export var max_speed: float = 1000.0
+@export var max_launch_power: float = 500.0
+@export var gravity_force: float = 50.0
+@export var clash_detection_distance: float = 90.0
 
-var speed: float = 0.0
+var _targets := []
 
-@onready var _visual: Sprite2D = %Visual
+@onready var _gravity: Area2D = %Gravity
+@onready var _clash_ray: RayCast2D = %RayCast2D
 
 
 func _ready() -> void:
 	Game.launch.connect(
 			func(power: float, launch_angle: float):
-				speed = power * max_speed
+				var speed = power * max_launch_power
+				apply_torque_impulse(speed)
 				apply_central_impulse((Vector2.RIGHT * speed).rotated(launch_angle))
+				process_mode = Node.PROCESS_MODE_INHERIT
 	)
+	_gravity.body_entered.connect(_on_gravity_entered)
+	_gravity.body_exited.connect(_on_gravity_exited)
+	body_entered.connect(_on_hit)
 
 
-func _process(delta: float) -> void:
-	var scaled_speed: float = linear_velocity.length() / max_speed
-	var vis_rotation: float = -scaled_speed * TAU * rotation_speed * delta
-	_visual.rotation = wrapf(vis_rotation, 0, TAU)
+func _physics_process(_delta: float) -> void:
+	if _targets.is_empty():
+		return
+	
+	_clash_ray.global_position = global_position
+	var closest_target: Node2D = _targets[0]
+	var closest_distance: float = global_position.distance_squared_to(closest_target.global_position)
+	for i in range(1, _targets.size()):
+		var distance: float = global_position.distance_squared_to(
+				_targets[i].global_position)
+		if distance < closest_distance:
+			closest_target = _targets[i]
+			closest_distance = distance
+	_clash_ray.target_position = (global_position.direction_to(closest_target.global_position)
+			* clash_detection_distance)
+	if _clash_ray.is_colliding():
+		var hit_body := _clash_ray.get_collider() as Node2D
+		if hit_body.is_in_group(&"Enemy"):
+			_clash_ray.enabled = false
+			get_tree().create_timer(0.5).timeout.connect(func(): _clash_ray.enabled = true)
+			Game.clash()
+
+
+func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
+	if not _targets.is_empty():
+		var avg_target_point := Vector2.ZERO
+		for target: Node2D in _targets:
+			var distance: float = (global_position.distance_to(target.global_position))
+			var strength: float = 1 - (distance / _gravity.get_child(0).shape.radius)
+			avg_target_point += target.global_position * strength
+		avg_target_point /= _targets.size()
+		var steering_dir := avg_target_point - global_position
+		apply_central_force(steering_dir * (gravity_force / max_speed))
+	
+	
+	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 10)
+	linear_velocity = linear_velocity.limit_length(allowable_speed)
+	if linear_velocity.length() < 10:
+		linear_velocity = Vector2.ZERO
+		angular_velocity = 0.0
+		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
+		set_deferred("freeze", true)
+
+
+func _on_gravity_entered(body: Node) -> void:
+	if body.is_in_group(&"Beyblade") and not body in _targets:
+		_targets.append(body)
+
+
+func _on_gravity_exited(body: Node) -> void:
+	if body in _targets:
+		_targets.erase(body)
+
+
+func _on_hit(body:Node) -> void:
+	if body.is_in_group(&"Enemy"):
+		_strike_enemy(body as PhysicsBody2D)
+
+
+func _on_clash_zone_body_entered(body: Node) -> void:
+	if body.is_in_group(&"Enemy"):
+		Game.clash()
+
+
+func _strike_enemy(enemy: Node) -> void:
+	enemy.angular_damp = 4.0
+	enemy.angular_damp_mode = DAMP_MODE_REPLACE
+	angular_damp = 0.0
+	get_tree().create_timer(3.0).timeout.connect(func(): angular_damp = 1.0)
