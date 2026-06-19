@@ -19,5 +19,5 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var scaled_speed: float = linear_velocity.length() / max_speed
-	var vis_rotation: float = -scaled_speed * PI * 2 * rotation_speed * delta
-	_visual.rotation = wrapf(vis_rotation, -PI, PI)
+	var vis_rotation: float = -scaled_speed * TAU * rotation_speed * delta
+	_visual.rotation = wrapf(vis_rotation, 0, TAU)
