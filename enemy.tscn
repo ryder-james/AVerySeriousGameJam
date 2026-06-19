@@ -19,6 +19,7 @@ physics_material_override = SubResource("PhysicsMaterial_gqbix")
 gravity_scale = -0.2
 inertia = 0.1
 script = ExtResource("1_4gyqm")
+gravity_force = 200.0
 
 [node name="Visual" type="Sprite2D" parent="." unique_id=1297228985]
 unique_name_in_owner = true

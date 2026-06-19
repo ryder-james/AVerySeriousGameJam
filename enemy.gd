@@ -28,6 +28,10 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 	
 	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 1000)
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
+	if angular_velocity <= 0.5:
+		linear_velocity = Vector2.ZERO
+		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
+		freeze = true
 
 
 func _on_gravity_entered(body: Node) -> void:
