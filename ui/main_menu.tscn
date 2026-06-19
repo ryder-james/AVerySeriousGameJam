@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://djx0audro2pmg"]
+
+[ext_resource type="Script" uid="uid://cp3tostk70tky" path="res://ui/main_menu.gd" id="1_t7e0r"]
+
+[node name="MainMenu" type="Node2D" unique_id=394547681]
+script = ExtResource("1_t7e0r")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=747687149]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1775346133]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer" unique_id=1936366186]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 150
+
+[node name="GameName" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=1276223407]
+layout_mode = 2
+theme_override_font_sizes/font_size = 70
+text = "[GAME NAME]"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=397214826]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+
+[node name="Start" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=560747583]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Start"
+
+[node name="Settings" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=2000951847]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Settings"

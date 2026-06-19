@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://cb1spbobf24cr"]
+
+[ext_resource type="Script" uid="uid://hwifecs7of6w" path="res://ui/end_run_menu.gd" id="1_kkfu8"]
+[ext_resource type="Texture2D" uid="uid://dwqyok7413lhk" path="res://ui/imgs/border.png" id="1_okgya"]
+[ext_resource type="Texture2D" uid="uid://bhof6mpijbtsm" path="res://ui/imgs/restart_button.png" id="2_kkfu8"]
+[ext_resource type="Texture2D" uid="uid://cd7ag86v4kbtl" path="res://ui/imgs/shop_button.png" id="3_stfcq"]
+
+[node name="EndRunMenu" type="Control" unique_id=843066510]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kkfu8")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=774155424]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ButtonPanel" type="MarginContainer" parent="CenterContainer" unique_id=794712494]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CenterContainer/ButtonPanel" unique_id=1515780081]
+layout_mode = 2
+texture = ExtResource("1_okgya")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/ButtonPanel" unique_id=2010088372]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/ButtonPanel/MarginContainer" unique_id=1244672012]
+layout_mode = 2
+
+[node name="ShopContainer" type="MarginContainer" parent="CenterContainer/ButtonPanel/MarginContainer/HBoxContainer" unique_id=755460407]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CenterContainer/ButtonPanel/MarginContainer/HBoxContainer/ShopContainer" unique_id=898724198]
+layout_mode = 2
+texture = ExtResource("1_okgya")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/ButtonPanel/MarginContainer/HBoxContainer/ShopContainer" unique_id=1532243959]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ShopButton" type="TextureButton" parent="CenterContainer/ButtonPanel/MarginContainer/HBoxContainer/ShopContainer/MarginContainer" unique_id=476315611]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = ExtResource("3_stfcq")
+
+[node name="RestartContainer" type="MarginContainer" parent="CenterContainer/ButtonPanel/MarginContainer/HBoxContainer" unique_id=1575083972]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CenterContainer/ButtonPanel/MarginContainer/HBoxContainer/RestartContainer" unique_id=210701392]
+layout_mode = 2
+texture = ExtResource("1_okgya")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/ButtonPanel/MarginContainer/HBoxContainer/RestartContainer" unique_id=1794574932]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RestartButton" type="TextureButton" parent="CenterContainer/ButtonPanel/MarginContainer/HBoxContainer/RestartContainer/MarginContainer2" unique_id=843140658]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = ExtResource("2_kkfu8")
