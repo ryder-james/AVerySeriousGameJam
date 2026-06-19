@@ -10,7 +10,7 @@ bounce = 0.6
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujo3m"]
 radius = 47.26521
 
-[node name="Enemy" type="StaticBody2D" unique_id=1776879099]
+[node name="Enemy" type="StaticBody2D" unique_id=1776879099 groups=["Enemy"]]
 physics_material_override = SubResource("PhysicsMaterial_gqbix")
 script = ExtResource("1_4gyqm")
 

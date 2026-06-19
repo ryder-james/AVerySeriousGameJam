@@ -7,7 +7,7 @@ var rotation_speed: float = 0.0
 
 
 func _ready() -> void:
-	rotation_speed = randf_range(PI, TAU)
+	rotation_speed = -randf_range(PI, TAU)
 	constant_angular_velocity = deg_to_rad(rotation_speed)
 
 
