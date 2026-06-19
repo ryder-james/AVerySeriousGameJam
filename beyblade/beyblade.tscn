@@ -13,11 +13,13 @@ radius = 42.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_7oyt7"]
 radius = 400.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_s0pqt"]
+radius = 84.00595
+
 [node name="Beyblade" type="RigidBody2D" unique_id=414612044]
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_gqbix")
 inertia = 0.1
-continuous_cd = 2
 angular_damp_mode = 1
 angular_damp = 1.0
 script = ExtResource("1_e03yv")
@@ -43,3 +45,10 @@ unique_name_in_owner = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gravity" unique_id=550926251]
 shape = SubResource("CircleShape2D_7oyt7")
 debug_color = Color(0.57633805, 0.4124641, 0.9417703, 0.41960785)
+
+[node name="ClashZone" type="Area2D" parent="." unique_id=1699636812]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClashZone" unique_id=973187633]
+shape = SubResource("CircleShape2D_s0pqt")
+debug_color = Color(0.99866766, 0, 0.14787182, 0.41960785)

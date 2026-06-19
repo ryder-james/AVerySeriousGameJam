@@ -31,7 +31,7 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 	if angular_velocity <= 0.5:
 		linear_velocity = Vector2.ZERO
 		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
-		freeze = true
+		set_deferred("freeze", true)
 
 
 func _on_gravity_entered(body: Node) -> void:
