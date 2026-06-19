@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dc5slvb8uo1vp"]
+
+[ext_resource type="Script" uid="uid://co2jq7dwmmeci" path="res://enemy.gd" id="1_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://dwfc8ib2p6olc" path="res://beyblade/beyblade.png" id="2_67e6m"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gqbix"]
+friction = 0.0
+bounce = 0.6
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ujo3m"]
+radius = 47.26521
+
+[node name="Enemy" type="StaticBody2D" unique_id=1776879099]
+physics_material_override = SubResource("PhysicsMaterial_gqbix")
+script = ExtResource("1_4gyqm")
+
+[node name="Visual" type="Sprite2D" parent="." unique_id=1297228985]
+unique_name_in_owner = true
+texture = ExtResource("2_67e6m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1437595302]
+shape = SubResource("CircleShape2D_ujo3m")
