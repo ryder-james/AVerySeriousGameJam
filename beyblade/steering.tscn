@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cx3i400ddurxv"]
+
+[ext_resource type="Script" uid="uid://ctxpkon72l3kp" path="res://beyblade/steering_controller.gd" id="1_pjoj1"]
+
+[node name="Steering" type="Node2D" unique_id=1738278659]
+script = ExtResource("1_pjoj1")

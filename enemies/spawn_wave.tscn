@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ym2ktj501ff6"]
+
+[ext_resource type="Script" uid="uid://1iney1ypchxn" path="res://spawn_wave.gd" id="1_gnbwa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_71pa8"]
+size = Vector2(20, 800)
+
+[node name="SpawnWave" type="Node2D" unique_id=2032588106]
+script = ExtResource("1_gnbwa")
+
+[node name="SpawnTriggerWall" type="Area2D" parent="." unique_id=214854142]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnTriggerWall" unique_id=905137304]
+shape = SubResource("RectangleShape2D_71pa8")
