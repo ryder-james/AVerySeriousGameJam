@@ -1,10 +1,13 @@
 extends Node
-
+var monies : int = 500
+var player_distance : int = 0
+var rpm : int = 0
 
 signal launch(power: float, angle: float)
 
 
 func reset_game() -> void:
+	player_distance = 0
 	get_tree().reload_current_scene()
 
 func enter_shop():

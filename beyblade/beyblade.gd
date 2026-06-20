@@ -2,7 +2,7 @@ extends RigidBody2D
 
 
 @export var max_speed: float = 1000.0
-@export var max_launch_power: float = 500.0
+@export var max_launch_power: float = 800.0
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
 
@@ -17,7 +17,7 @@ func _ready() -> void:
 	Game.launch.connect(
 			func(power: float, launch_angle: float):
 				var speed = power * max_launch_power
-				apply_torque_impulse(speed)
+				apply_torque_impulse(speed/50)
 				apply_central_impulse((Vector2.RIGHT * speed).rotated(launch_angle))
 				process_mode = Node.PROCESS_MODE_INHERIT
 	)
@@ -25,6 +25,10 @@ func _ready() -> void:
 	_gravity.body_exited.connect(_on_gravity_exited)
 	body_entered.connect(_on_hit)
 
+func _process(delta):
+	if roundi(global_position.x / 100) > Game.player_distance:
+		Game.player_distance = roundi(global_position.x / 100)
+	Game.rpm = roundi(angular_velocity/TAU * 60)
 
 func _physics_process(_delta: float) -> void:
 	if _targets.is_empty():
@@ -54,12 +58,13 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 	apply_central_force(_steering.get_steering_vector(
 			gravity_force, _gravity.get_child(0).shape.radius, max_speed))
 	
-	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 10)
+	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 500)
 	linear_velocity.x = max(linear_velocity.x, -200)
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
 	if linear_velocity.length() < 10:
 		linear_velocity = Vector2.ZERO
 		angular_velocity = 0.0
+		%EndRunMenu.visible = true
 		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 		set_deferred("freeze", true)
 
