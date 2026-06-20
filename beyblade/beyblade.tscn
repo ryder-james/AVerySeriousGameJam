@@ -1,7 +1,11 @@
 [gd_scene format=3 uid="uid://bwpfbwm75cowr"]
 
 [ext_resource type="Script" uid="uid://dvgou34t5mt21" path="res://beyblade/beyblade.gd" id="1_e03yv"]
+
 [ext_resource type="Texture2D" uid="uid://dot4edvib1brr" path="res://beyblade/skins/beyblade.png" id="2_qg5uo"]
+
+[ext_resource type="PackedScene" uid="uid://cx3i400ddurxv" path="res://beyblade/steering.tscn" id="3_0vtsf"]
+
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gqbix"]
 friction = 0.0
@@ -13,7 +17,11 @@ radius = 42.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_7oyt7"]
 radius = 400.0
 
-[node name="Beyblade" type="RigidBody2D" unique_id=414612044]
+[sub_resource type="Curve" id="Curve_orwns"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Beyblade" type="RigidBody2D" unique_id=414612044 groups=["Player"]]
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_gqbix")
 inertia = 0.1
@@ -33,6 +41,7 @@ texture = ExtResource("2_qg5uo")
 shape = SubResource("CircleShape2D_ujo3m")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1301946405]
+offset = Vector2(300, 0)
 zoom = Vector2(0.785, 0.785)
 limit_top = 0
 limit_bottom = 0
@@ -49,3 +58,7 @@ debug_color = Color(0.57633805, 0.4124641, 0.9417703, 0.41960785)
 unique_name_in_owner = true
 top_level = true
 target_position = Vector2(90, 0)
+
+[node name="Steering" parent="." unique_id=1738278659 instance=ExtResource("3_0vtsf")]
+unique_name_in_owner = true
+attraction_strength_curve = SubResource("Curve_orwns")

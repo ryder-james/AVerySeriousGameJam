@@ -7,6 +7,7 @@ extends RigidBody2D
 var _targets := []
 
 @onready var _gravity: Area2D = %Gravity
+@onready var _steering: SteeringController = %Steering
 
 
 func _ready() -> void:
@@ -16,15 +17,8 @@ func _ready() -> void:
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
-	if not _targets.is_empty():
-		var avg_target_point := Vector2.ZERO
-		for target: Node2D in _targets:
-			var distance: float = (global_position.distance_to(target.global_position))
-			var strength: float = 1 - (distance / _gravity.get_child(0).shape.radius)
-			avg_target_point += target.global_position * strength
-		avg_target_point /= _targets.size()
-		var steering_dir := avg_target_point - global_position
-		apply_central_force(steering_dir * (gravity_force / max_speed))
+	apply_central_force(_steering.get_steering_vector(
+			gravity_force, _gravity.get_child(0).shape.radius, max_speed))
 	
 	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 1000)
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
