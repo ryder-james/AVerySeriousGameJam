@@ -260,3 +260,201 @@ position = Vector2(0, 130)
 
 [node name="Marker2D5" type="Marker2D" parent="EnemySpawners/SpawnWave9/Markers" unique_id=1156974415]
 position = Vector2(0, 313)
+
+[node name="SpawnWave10" parent="EnemySpawners" unique_id=1493219278 node_paths=PackedStringArray("spawn_points") instance=ExtResource("6_71pa8")]
+position = Vector2(13136, 1)
+spawn_points = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2"), NodePath("Markers/Marker2D3"), NodePath("Markers/Marker2D4"), NodePath("Markers/Marker2D5")]
+_enemy_scenes = Array[PackedScene]([ExtResource("4_p5pve")])
+
+[node name="Markers" type="Node2D" parent="EnemySpawners/SpawnWave10" unique_id=844771122]
+position = Vector2(1342, 0)
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners/SpawnWave10/Markers" unique_id=132216664]
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners/SpawnWave10/Markers" unique_id=851711290]
+position = Vector2(0, -279)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners/SpawnWave10/Markers" unique_id=1736377015]
+position = Vector2(0, -141)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners/SpawnWave10/Markers" unique_id=1623234170]
+position = Vector2(0, 130)
+
+[node name="Marker2D5" type="Marker2D" parent="EnemySpawners/SpawnWave10/Markers" unique_id=1713377507]
+position = Vector2(0, 313)
+
+[node name="SpawnWave11" parent="EnemySpawners" unique_id=1835859923 node_paths=PackedStringArray("spawn_points") instance=ExtResource("6_71pa8")]
+position = Vector2(14556, 1)
+spawn_points = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2"), NodePath("Markers/Marker2D3"), NodePath("Markers/Marker2D4"), NodePath("Markers/Marker2D5")]
+_enemy_scenes = Array[PackedScene]([ExtResource("4_p5pve")])
+
+[node name="Markers" type="Node2D" parent="EnemySpawners/SpawnWave11" unique_id=17987551]
+position = Vector2(1342, 0)
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners/SpawnWave11/Markers" unique_id=641173247]
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners/SpawnWave11/Markers" unique_id=1881648291]
+position = Vector2(0, -279)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners/SpawnWave11/Markers" unique_id=400949421]
+position = Vector2(0, -141)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners/SpawnWave11/Markers" unique_id=736505186]
+position = Vector2(0, 130)
+
+[node name="Marker2D5" type="Marker2D" parent="EnemySpawners/SpawnWave11/Markers" unique_id=511792580]
+position = Vector2(0, 313)
+
+[node name="SpawnWave12" parent="EnemySpawners" unique_id=421653356 node_paths=PackedStringArray("spawn_points") instance=ExtResource("6_71pa8")]
+position = Vector2(15961, 1)
+spawn_points = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2"), NodePath("Markers/Marker2D3"), NodePath("Markers/Marker2D4"), NodePath("Markers/Marker2D5")]
+_enemy_scenes = Array[PackedScene]([ExtResource("4_p5pve")])
+
+[node name="Markers" type="Node2D" parent="EnemySpawners/SpawnWave12" unique_id=2054555973]
+position = Vector2(1342, 0)
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners/SpawnWave12/Markers" unique_id=584788406]
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners/SpawnWave12/Markers" unique_id=1884369193]
+position = Vector2(0, -279)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners/SpawnWave12/Markers" unique_id=1956811972]
+position = Vector2(0, -141)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners/SpawnWave12/Markers" unique_id=1703678770]
+position = Vector2(0, 130)
+
+[node name="Marker2D5" type="Marker2D" parent="EnemySpawners/SpawnWave12/Markers" unique_id=1653190801]
+position = Vector2(0, 313)
+
+[node name="SpawnWave13" parent="EnemySpawners" unique_id=714850864 node_paths=PackedStringArray("spawn_points") instance=ExtResource("6_71pa8")]
+position = Vector2(17285, 1)
+spawn_points = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2"), NodePath("Markers/Marker2D3"), NodePath("Markers/Marker2D4"), NodePath("Markers/Marker2D5")]
+_enemy_scenes = Array[PackedScene]([ExtResource("4_p5pve")])
+
+[node name="Markers" type="Node2D" parent="EnemySpawners/SpawnWave13" unique_id=1073971829]
+position = Vector2(1342, 0)
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners/SpawnWave13/Markers" unique_id=1980329037]
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners/SpawnWave13/Markers" unique_id=1532747515]
+position = Vector2(0, -279)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners/SpawnWave13/Markers" unique_id=1295019579]
+position = Vector2(0, -141)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners/SpawnWave13/Markers" unique_id=652893102]
+position = Vector2(0, 130)
+
+[node name="Marker2D5" type="Marker2D" parent="EnemySpawners/SpawnWave13/Markers" unique_id=1053488408]
+position = Vector2(0, 313)
+
+[node name="SpawnWave14" parent="EnemySpawners" unique_id=2013619110 node_paths=PackedStringArray("spawn_points") instance=ExtResource("6_71pa8")]
+position = Vector2(18629, 1)
+spawn_points = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2"), NodePath("Markers/Marker2D3"), NodePath("Markers/Marker2D4"), NodePath("Markers/Marker2D5")]
+_enemy_scenes = Array[PackedScene]([ExtResource("4_p5pve")])
+
+[node name="Markers" type="Node2D" parent="EnemySpawners/SpawnWave14" unique_id=1451835485]
+position = Vector2(1342, 0)
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners/SpawnWave14/Markers" unique_id=566732066]
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners/SpawnWave14/Markers" unique_id=1610500194]
+position = Vector2(0, -279)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners/SpawnWave14/Markers" unique_id=1117021813]
+position = Vector2(0, -141)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners/SpawnWave14/Markers" unique_id=1171290986]
+position = Vector2(0, 130)
+
+[node name="Marker2D5" type="Marker2D" parent="EnemySpawners/SpawnWave14/Markers" unique_id=541602214]
+position = Vector2(0, 313)
+
+[node name="SpawnWave15" parent="EnemySpawners" unique_id=1771702986 node_paths=PackedStringArray("spawn_points") instance=ExtResource("6_71pa8")]
+position = Vector2(20445, 1)
+spawn_points = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2"), NodePath("Markers/Marker2D3"), NodePath("Markers/Marker2D4"), NodePath("Markers/Marker2D5")]
+_enemy_scenes = Array[PackedScene]([ExtResource("4_p5pve")])
+
+[node name="Markers" type="Node2D" parent="EnemySpawners/SpawnWave15" unique_id=59161190]
+position = Vector2(1342, 0)
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners/SpawnWave15/Markers" unique_id=1735319211]
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners/SpawnWave15/Markers" unique_id=135780424]
+position = Vector2(0, -279)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners/SpawnWave15/Markers" unique_id=566465728]
+position = Vector2(0, -141)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners/SpawnWave15/Markers" unique_id=1179099372]
+position = Vector2(0, 130)
+
+[node name="Marker2D5" type="Marker2D" parent="EnemySpawners/SpawnWave15/Markers" unique_id=1721295298]
+position = Vector2(0, 313)
+
+[node name="SpawnWave16" parent="EnemySpawners" unique_id=279477130 node_paths=PackedStringArray("spawn_points") instance=ExtResource("6_71pa8")]
+position = Vector2(21698, 1)
+spawn_points = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2"), NodePath("Markers/Marker2D3"), NodePath("Markers/Marker2D4"), NodePath("Markers/Marker2D5")]
+_enemy_scenes = Array[PackedScene]([ExtResource("4_p5pve")])
+
+[node name="Markers" type="Node2D" parent="EnemySpawners/SpawnWave16" unique_id=2109647492]
+position = Vector2(1342, 0)
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners/SpawnWave16/Markers" unique_id=959059596]
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners/SpawnWave16/Markers" unique_id=1017718779]
+position = Vector2(0, -279)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners/SpawnWave16/Markers" unique_id=1785368665]
+position = Vector2(0, -141)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners/SpawnWave16/Markers" unique_id=2138311528]
+position = Vector2(0, 130)
+
+[node name="Marker2D5" type="Marker2D" parent="EnemySpawners/SpawnWave16/Markers" unique_id=864531102]
+position = Vector2(0, 313)
+
+[node name="SpawnWave17" parent="EnemySpawners" unique_id=1437489803 node_paths=PackedStringArray("spawn_points") instance=ExtResource("6_71pa8")]
+position = Vector2(23207, 1)
+spawn_points = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2"), NodePath("Markers/Marker2D3"), NodePath("Markers/Marker2D4"), NodePath("Markers/Marker2D5")]
+_enemy_scenes = Array[PackedScene]([ExtResource("4_p5pve")])
+
+[node name="Markers" type="Node2D" parent="EnemySpawners/SpawnWave17" unique_id=8280710]
+position = Vector2(1342, 0)
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners/SpawnWave17/Markers" unique_id=23827440]
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners/SpawnWave17/Markers" unique_id=1381044664]
+position = Vector2(0, -279)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners/SpawnWave17/Markers" unique_id=1732497769]
+position = Vector2(0, -141)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners/SpawnWave17/Markers" unique_id=440185396]
+position = Vector2(0, 130)
+
+[node name="Marker2D5" type="Marker2D" parent="EnemySpawners/SpawnWave17/Markers" unique_id=1895154383]
+position = Vector2(0, 313)
+
+[node name="SpawnWave18" parent="EnemySpawners" unique_id=1403785249 node_paths=PackedStringArray("spawn_points") instance=ExtResource("6_71pa8")]
+position = Vector2(24534, 1)
+spawn_points = [NodePath("Markers/Marker2D"), NodePath("Markers/Marker2D2"), NodePath("Markers/Marker2D3"), NodePath("Markers/Marker2D4"), NodePath("Markers/Marker2D5")]
+_enemy_scenes = Array[PackedScene]([ExtResource("4_p5pve")])
+
+[node name="Markers" type="Node2D" parent="EnemySpawners/SpawnWave18" unique_id=1785227855]
+position = Vector2(1342, 0)
+
+[node name="Marker2D" type="Marker2D" parent="EnemySpawners/SpawnWave18/Markers" unique_id=1320227535]
+
+[node name="Marker2D2" type="Marker2D" parent="EnemySpawners/SpawnWave18/Markers" unique_id=1810994673]
+position = Vector2(0, -279)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemySpawners/SpawnWave18/Markers" unique_id=483586742]
+position = Vector2(0, -141)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemySpawners/SpawnWave18/Markers" unique_id=818862034]
+position = Vector2(0, 130)
+
+[node name="Marker2D5" type="Marker2D" parent="EnemySpawners/SpawnWave18/Markers" unique_id=226115213]
+position = Vector2(0, 313)
