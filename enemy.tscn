@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dc5slvb8uo1vp"]
 
 [ext_resource type="Script" uid="uid://co2jq7dwmmeci" path="res://enemy.gd" id="1_4gyqm"]
-[ext_resource type="Texture2D" uid="uid://dot4edvib1brr" path="res://beyblade/beyblade.png" id="2_67e6m"]
+[ext_resource type="Texture2D" uid="uid://dot4edvib1brr" path="res://beyblade/skins/beyblade.png" id="2_67e6m"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gqbix"]
 friction = 0.0
