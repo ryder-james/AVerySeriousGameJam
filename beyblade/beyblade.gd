@@ -13,9 +13,9 @@ signal end_dash
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
 
-var dash_tween: Tween = null
 var is_dashing := false
-var dash_duration := 0.0
+var _dash_tween: Tween = null
+var _dash_duration := 0.0
 
 @onready var rpm_agent: RPMAgent = %RPMAgent
 @onready var _default_angular_damp: float = angular_damp
@@ -54,11 +54,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not is_dashing and event.is_action_pressed("launch"):
 		start_dash.emit()
 		is_dashing = true
-		dash_duration = 1.0
-		dash_tween = create_tween()
-		dash_tween.set_ignore_time_scale(true)
-		dash_tween.tween_property(self, "dash_duration", 0.0, max_dash_duration)
-		dash_tween.finished.connect(_release_dash.bind(0.0))
+		_dash_duration = 1.0
+		_dash_tween = create_tween()
+		_dash_tween.set_ignore_time_scale(true)
+		_dash_tween.tween_property(self, "dash_duration", 0.0, max_dash_duration)
+		_dash_tween.finished.connect(_release_dash.bind(0.0))
 	elif is_dashing:
 		var release_dash := false
 		var dash_angle := 0.0
@@ -75,8 +75,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _release_dash(angle: float) -> void:
-	if dash_tween:
-		dash_tween.stop()
+	if _dash_tween:
+		_dash_tween.stop()
 	is_dashing = false
 	apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(angle))
 	end_dash.emit()
