@@ -10,11 +10,9 @@ signal death
 @export var clash_detection_distance: float = 90.0
 
 var _targets: Array[Node2D] = []
-var _invalid_clash_targets: Array[Node2D] = []
 
 @onready var rpm_agent: RPMAgent = %RPMAgent
 @onready var _gravity: Area2D = %Gravity
-@onready var _clash_ray: RayCast2D = %ClashRay
 @onready var _steering: SteeringController = %Steering
 
 
@@ -35,33 +33,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if roundi(global_position.x / 100) > Game.player_distance:
 		Game.player_distance = roundi(global_position.x / 100)
-
-
-func _physics_process(_delta: float) -> void:
-	if _targets.is_empty():
-		return
-	
-	_clash_ray.global_position = global_position
-	var closest_target: Node2D = _targets[0]
-	var closest_distance: float = global_position.distance_squared_to(closest_target.global_position)
-	for i in range(1, _targets.size()):
-		var distance: float = global_position.distance_squared_to(
-				_targets[i].global_position)
-		if distance < closest_distance:
-			closest_target = _targets[i]
-			closest_distance = distance
-	_clash_ray.target_position = (global_position.direction_to(closest_target.global_position)
-			* clash_detection_distance)
-	if _clash_ray.is_colliding():
-		var hit_body := _clash_ray.get_collider() as Node2D
-		if hit_body.is_in_group(&"Enemy"):
-			if hit_body in _invalid_clash_targets:
-				return
-			_clash_ray.enabled = false
-			get_tree().create_timer(0.5).timeout.connect(func(): _clash_ray.enabled = true)
-			_invalid_clash_targets.append(hit_body)
-			get_tree().create_timer(2.0).timeout.connect(func(): _invalid_clash_targets.erase(hit_body))
-			Game.clash(rpm_agent, hit_body.rpm_agent)
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
