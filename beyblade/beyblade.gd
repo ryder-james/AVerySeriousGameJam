@@ -2,15 +2,21 @@ extends RigidBody2D
 
 
 signal die
+signal start_dash
+signal end_dash
 
 
 @export var max_speed: float = 1000.0
 @export var max_launch_power: float = 800.0
+@export var dash_strength: float = 500.0
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
 
-@onready var _default_angular_damp: float = angular_damp
+var is_dashing := false
+var _dash_angle := 0.0
+
 @onready var rpm_agent: RPMAgent = %RPMAgent
+@onready var _default_angular_damp: float = angular_damp
 
 
 func _ready() -> void:
@@ -28,6 +34,15 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if roundi(global_position.x / 100) > Game.player_distance:
 		Game.player_distance = roundi(global_position.x / 100)
+		
+	if not is_dashing:
+		return
+	if Input.is_action_pressed("ccw"):
+		_dash_angle = deg_to_rad(-45.0)
+	elif Input.is_action_pressed("cw"):
+		_dash_angle = deg_to_rad(45.0)
+	else:
+		_dash_angle = 0.0
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
@@ -40,6 +55,17 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 		die.emit()
 		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 		set_deferred("freeze", true)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("launch"):
+		start_dash.emit()
+		is_dashing = true
+		print("start")
+	elif is_dashing and event.is_action_released("launch"):
+		end_dash.emit()
+		apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(_dash_angle))
+		print("end")
 
 
 func _on_clash(_player_rpm: RPMAgent, _enemy_rpm: RPMAgent, result: Game.ClashResult):
