@@ -1,6 +1,9 @@
 extends RigidBody2D
 
 
+signal death
+
+
 @export var max_speed: float = 1000.0
 @export var max_launch_power: float = 800.0
 @export var gravity_force: float = 50.0

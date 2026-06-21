@@ -15,19 +15,23 @@ signal launch(power: float, angle: float)
 
 var monies : int = 500
 var player_distance : int = 0
-var player: Beyblade = null
 var clash_result := ClashResult.UNCALCULATED
+var player: Beyblade = null:
+	set = set_player
 
 
 func reset_game() -> void:
 	player_distance = 0
 	get_tree().reload_current_scene()
 
+
 func enter_shop():
 	get_tree().change_scene_to_file("res://ui/shop_menu.tscn")
 
+
 func goto_game():
 	get_tree().change_scene_to_file("res://map.tscn")
+
 
 func clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
 	var cam := get_tree().root.get_camera_2d()
@@ -60,6 +64,18 @@ func consume_clash_result(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> ClashRes
 	var result: ClashResult = clash_result
 	clash_result = ClashResult.UNCALCULATED
 	return result
+
+
+func set_player(new_player: Beyblade) -> void:
+	if player:
+		player.death.disconnect(_on_player_death)
+	player = new_player
+	if player:
+		player.death.connect(_on_player_death)
+
+
+func _on_player_death() -> void:
+	player.get_node("%EndRunMenu").visible = true
 
 
 func _unclash(camera: Camera2D, default_zoom: Vector2) -> void:
