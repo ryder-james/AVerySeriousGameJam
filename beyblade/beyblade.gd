@@ -77,7 +77,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_dash_duration = 1.0
 			_dash_tween = create_tween()
 			_dash_tween.set_ignore_time_scale(true)
-			_dash_tween.tween_property(self, "dash_duration", 0.0, max_dash_duration)
+			_dash_tween.tween_property(self, "_dash_duration", 0.0, max_dash_duration)
 			_dash_tween.finished.connect(_release_dash.bind(_preferred_dash_angle))
 		elif event.is_action_pressed("ccw"):
 			_preferred_dash_angle = DASH_UP
