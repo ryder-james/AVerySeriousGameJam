@@ -3,6 +3,7 @@ extends RigidBody2D
 
 @export var max_speed: float = 1000.0
 @export var gravity_force: float = 50.0
+@export var initial_spin_force: float = 5.0
 
 var _targets := []
 
@@ -12,7 +13,23 @@ var _targets := []
 
 
 func _ready() -> void:
-	apply_torque_impulse(10)
+	# I got to this function by just playing around in Desmos until I liked the
+	#   multipliers I saw. They are magic numbers in the most literal sense.
+	# Takes the form of a((D / b)^2) + 1, where D is how far the player has
+	#   traveled, minus the minimum distance to start scaling, to a minimum of 0.
+	#   Therefore, scaling will be 1 until min_distance is reached.
+	# We add 1 at the end so that our scaling is never 0, it always starts at at
+	#   least 1.
+	# a and b both affect how steep the curve is, with a having a much stronger
+	#   impact and therefore b being a much more granular adjustment. b's impact
+	#   is also inversely proportional, so a larger b creates a more gradual curve
+	# https://www.desmos.com/calculator/woqwasyj9z
+	const a: float = 6.0
+	const b: float = 250.0
+	const min_distance: float = 100.0
+	var distance_stat: float = max(Game.player_distance - min_distance, 0)
+	var initial_torque_multiplier = a * ((distance_stat / b) ** 2) + 1
+	apply_torque_impulse(initial_spin_force * initial_torque_multiplier)
 	_gravity.body_entered.connect(_on_gravity_entered)
 	_gravity.body_exited.connect(_on_gravity_exited)
 
