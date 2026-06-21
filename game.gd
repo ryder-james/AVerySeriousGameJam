@@ -24,14 +24,17 @@ var player: Beyblade = null:
 
 func reset_game() -> void:
 	player_distance = 0
+	Engine.time_scale = 1.0
 	get_tree().reload_current_scene()
 
 
 func enter_shop():
+	Engine.time_scale = 1.0
 	get_tree().change_scene_to_file("res://ui/shop_menu.tscn")
 
 
 func goto_game():
+	Engine.time_scale = 1.0
 	get_tree().change_scene_to_file("res://map.tscn")
 
 
