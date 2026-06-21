@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bwpfbwm75cowr"]
 
 [ext_resource type="Script" uid="uid://dvgou34t5mt21" path="res://beyblade/beyblade.gd" id="1_e03yv"]
-[ext_resource type="Texture2D" uid="uid://dot4edvib1brr" path="res://beyblade/skins/beyblade.png" id="2_qg5uo"]
+[ext_resource type="Texture2D" uid="uid://dabo0338qsvno" path="res://beyblade/skins/base_beyblade.png" id="2_83moc"]
 [ext_resource type="PackedScene" uid="uid://cx3i400ddurxv" path="res://beyblade/steering.tscn" id="3_0vtsf"]
 [ext_resource type="Script" uid="uid://dbu3n8xx0l4ha" path="res://beyblade/rpm_agent.gd" id="4_83moc"]
 
@@ -22,20 +22,18 @@ point_count = 3
 [node name="Beyblade" type="RigidBody2D" unique_id=414612044 groups=["Player"]]
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_gqbix")
-inertia = 0.1
+inertia = 0.25
 contact_monitor = true
 max_contacts_reported = 1
 angular_damp_mode = 1
 angular_damp = 1.0
 script = ExtResource("1_e03yv")
-max_speed = null
-max_launch_power = null
-gravity_force = 100.0
+gravity_force = 0.0
 clash_detection_distance = 100.0
 
 [node name="Visual" type="Sprite2D" parent="." unique_id=1297228985]
 unique_name_in_owner = true
-texture = ExtResource("2_qg5uo")
+texture = ExtResource("2_83moc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1437595302]
 shape = SubResource("CircleShape2D_ujo3m")

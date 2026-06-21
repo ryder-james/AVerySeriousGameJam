@@ -61,13 +61,13 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 	apply_central_force(_steering.get_steering_vector(
 			gravity_force, _gravity.get_child(0).shape.radius, max_speed))
 	
-	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 500)
+	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 1000)
 	linear_velocity.x = max(linear_velocity.x, -200)
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
 	if linear_velocity.length() < 10:
 		linear_velocity = Vector2.ZERO
 		angular_velocity = 0.0
-		%EndRunMenu.visible = true
+		death.emit()
 		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 		set_deferred("freeze", true)
 

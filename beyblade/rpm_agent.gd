@@ -13,4 +13,4 @@ func get_rpm() -> float:
 	if not parent_rb:
 		return 0.0
 	
-	return floorf(parent_rb.angular_velocity / TAU * 60 * 100) * 0.01
+	return floorf(parent_rb.angular_velocity / TAU * 100) * 0.01

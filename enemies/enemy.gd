@@ -12,7 +12,7 @@ var _targets := []
 
 
 func _ready() -> void:
-	apply_torque_impulse(1000)
+	apply_torque_impulse(10)
 	_gravity.body_entered.connect(_on_gravity_entered)
 	_gravity.body_exited.connect(_on_gravity_exited)
 
@@ -25,6 +25,7 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
 	if angular_velocity <= 0.5:
 		linear_velocity = Vector2.ZERO
+		angular_velocity = 0.0
 		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 		set_deferred("freeze", true)
 
