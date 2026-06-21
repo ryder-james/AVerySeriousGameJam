@@ -9,11 +9,13 @@ signal end_dash
 @export var max_speed: float = 1000.0
 @export var max_launch_power: float = 800.0
 @export var dash_strength: float = 500.0
+@export var max_dash_duration: float = 1.0
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
 
+var dash_tween: Tween = null
 var is_dashing := false
-var _dash_angle := 0.0
+var dash_duration := 0.0
 
 @onready var rpm_agent: RPMAgent = %RPMAgent
 @onready var _default_angular_damp: float = angular_damp
@@ -34,15 +36,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if roundi(global_position.x / 100) > Game.player_distance:
 		Game.player_distance = roundi(global_position.x / 100)
-		
-	if not is_dashing:
-		return
-	if Input.is_action_pressed("ccw"):
-		_dash_angle = deg_to_rad(-45.0)
-	elif Input.is_action_pressed("cw"):
-		_dash_angle = deg_to_rad(45.0)
-	else:
-		_dash_angle = 0.0
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
@@ -58,12 +51,35 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("launch"):
+	if not is_dashing and event.is_action_pressed("launch"):
 		start_dash.emit()
 		is_dashing = true
-	elif is_dashing and event.is_action_released("launch"):
-		end_dash.emit()
-		apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(_dash_angle))
+		dash_duration = 1.0
+		dash_tween = create_tween()
+		dash_tween.set_ignore_time_scale(true)
+		dash_tween.tween_property(self, "dash_duration", 0.0, max_dash_duration)
+		dash_tween.finished.connect(_release_dash.bind(0.0))
+	elif is_dashing:
+		var release_dash := false
+		var dash_angle := 0.0
+		if event.is_action_released("launch"):
+			release_dash = true
+		elif event.is_action_pressed("ccw"):
+			dash_angle = deg_to_rad(-45.0)
+			release_dash = true
+		elif event.is_action_pressed("cw"):
+			dash_angle = deg_to_rad(45.0)
+			release_dash = true
+		if release_dash:
+			_release_dash(dash_angle)
+
+
+func _release_dash(angle: float) -> void:
+	if dash_tween:
+		dash_tween.stop()
+	is_dashing = false
+	apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(angle))
+	end_dash.emit()
 
 
 func _on_clash(_player_rpm: RPMAgent, _enemy_rpm: RPMAgent, result: Game.ClashResult):
