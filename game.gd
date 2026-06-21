@@ -11,6 +11,7 @@ enum ClashResult {
 const Beyblade = preload("uid://dvgou34t5mt21")
 
 @warning_ignore("unused_signal")
+signal player_set(player: Beyblade)
 signal launch(power: float, angle: float)
 signal clash(player: RPMAgent, enemy: RPMAgent, result: ClashResult)
 
@@ -74,6 +75,7 @@ func set_player(new_player: Beyblade) -> void:
 		player.end_dash.connect(_on_dash_ended)
 		camera = get_tree().root.get_camera_2d()
 		default_camera_zoom = camera.zoom
+		player_set.emit(player)
 
 
 func _on_player_died() -> void:

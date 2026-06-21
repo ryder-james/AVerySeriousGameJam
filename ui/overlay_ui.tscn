@@ -1,6 +1,23 @@
 [gd_scene format=3 uid="uid://by4wumt7yrhdh"]
 
 [ext_resource type="Script" uid="uid://15fhxexaijtj" path="res://ui/overlay_ui.gd" id="1_ygi30"]
+[ext_resource type="Texture2D" uid="uid://r324o3jeddi6" path="res://ui/imgs/progress_bar_outline.png" id="2_g5hcj"]
+[ext_resource type="Texture2D" uid="uid://brml14clbpqdq" path="res://ui/imgs/progress_bar_fill.png" id="3_gjh5w"]
+[ext_resource type="Script" uid="uid://dsohgoo2xlggv" path="res://ui/dash_hold_bar.gd" id="4_gjh5w"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ygi30"]
+texture = ExtResource("2_g5hcj")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s31dh"]
+texture = ExtResource("3_gjh5w")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
 
 [node name="Overlay_Ui" type="Control" unique_id=1788766066]
 layout_mode = 3
@@ -49,12 +66,36 @@ autowrap_mode = 0
 
 [node name="Footer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=794671488]
 layout_mode = 2
-size_flags_horizontal = 8
 size_flags_vertical = 10
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/Footer" unique_id=1613515745]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="DashHoldBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/Footer" unique_id=1626832021]
+visible = false
+custom_minimum_size = Vector2(400, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxTexture_ygi30")
+theme_override_styles/fill = SubResource("StyleBoxTexture_s31dh")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+script = ExtResource("4_gjh5w")
+
+[node name="Control2" type="Control" parent="MarginContainer/VBoxContainer/Footer" unique_id=1467720889]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Monies" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Footer" unique_id=1938184794]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Monies: 500"
 fit_content = true
 autowrap_mode = 0
+horizontal_alignment = 2
+vertical_alignment = 1

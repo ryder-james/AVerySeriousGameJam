@@ -18,9 +18,9 @@ const DASH_UP := -DASH_DOWN
 @export var clash_detection_distance: float = 90.0
 
 var is_dashing := false
+var dash_duration := 0.0
 var _preferred_dash_angle := DASH_RIGHT
 var _dash_tween: Tween = null
-var _dash_duration := 0.0
 
 @onready var rpm_agent: RPMAgent = %RPMAgent
 @onready var _default_angular_damp: float = angular_damp
@@ -74,10 +74,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("launch"):
 			start_dash.emit()
 			is_dashing = true
-			_dash_duration = 1.0
+			dash_duration = max_dash_duration
 			_dash_tween = create_tween()
 			_dash_tween.set_ignore_time_scale(true)
-			_dash_tween.tween_property(self, "_dash_duration", 0.0, max_dash_duration)
+			_dash_tween.tween_property(self, "dash_duration", 0.0, max_dash_duration)
 			_dash_tween.finished.connect(_release_dash.bind(_preferred_dash_angle))
 		elif event.is_action_pressed("ccw"):
 			_preferred_dash_angle = DASH_UP
