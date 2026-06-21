@@ -8,6 +8,7 @@ extends RigidBody2D
 
 var _targets: Array[Node2D] = []
 
+@onready var rpm_agent: RPMAgent = %RPMAgent
 @onready var _gravity: Area2D = %Gravity
 @onready var _clash_ray: RayCast2D = %ClashRay
 @onready var _steering: SteeringController = %Steering
@@ -21,14 +22,16 @@ func _ready() -> void:
 				apply_central_impulse((Vector2.RIGHT * speed).rotated(launch_angle))
 				process_mode = Node.PROCESS_MODE_INHERIT
 	)
+	Game.player = self
 	_gravity.body_entered.connect(_on_gravity_entered)
 	_gravity.body_exited.connect(_on_gravity_exited)
 	body_entered.connect(_on_hit)
 
-func _process(delta):
+
+func _process(_delta: float) -> void:
 	if roundi(global_position.x / 100) > Game.player_distance:
 		Game.player_distance = roundi(global_position.x / 100)
-	Game.rpm = roundi(angular_velocity/TAU * 60)
+
 
 func _physics_process(_delta: float) -> void:
 	if _targets.is_empty():
@@ -50,7 +53,7 @@ func _physics_process(_delta: float) -> void:
 		if hit_body.is_in_group(&"Enemy"):
 			_clash_ray.enabled = false
 			get_tree().create_timer(0.75).timeout.connect(func(): _clash_ray.enabled = true)
-			Game.clash()
+			Game.clash(rpm_agent, hit_body.rpm_agent)
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
@@ -82,11 +85,6 @@ func _on_gravity_exited(body: Node) -> void:
 func _on_hit(body:Node) -> void:
 	if body.is_in_group(&"Enemy"):
 		_strike_enemy(body as PhysicsBody2D)
-
-
-func _on_clash_zone_body_entered(body: Node) -> void:
-	if body.is_in_group(&"Enemy"):
-		Game.clash()
 
 
 func _strike_enemy(enemy: Node) -> void:

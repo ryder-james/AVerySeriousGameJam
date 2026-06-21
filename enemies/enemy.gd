@@ -6,6 +6,7 @@ extends RigidBody2D
 
 var _targets := []
 
+@onready var rpm_agent: RPMAgent = %RPMAgent
 @onready var _gravity: Area2D = %Gravity
 @onready var _steering: SteeringController = %Steering
 
