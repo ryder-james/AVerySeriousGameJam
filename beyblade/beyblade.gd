@@ -61,11 +61,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("launch"):
 		start_dash.emit()
 		is_dashing = true
-		print("start")
 	elif is_dashing and event.is_action_released("launch"):
 		end_dash.emit()
 		apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(_dash_angle))
-		print("end")
 
 
 func _on_clash(_player_rpm: RPMAgent, _enemy_rpm: RPMAgent, result: Game.ClashResult):
