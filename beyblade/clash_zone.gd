@@ -19,7 +19,7 @@ func _physics_process(_delta: float) -> void:
 		return
 	var speed: float = parent_rb.linear_velocity.length()
 	var dir: Vector2 = parent_rb.linear_velocity / speed if speed > 0 else Vector2.ZERO
-	var distance := speed / Engine.physics_ticks_per_second
+	var distance := speed / Engine.physics_ticks_per_second * 3
 	global_position = parent_rb.global_position + dir * distance
 
 
@@ -30,14 +30,7 @@ func _on_clash_zone_hit(area: Area2D) -> void:
 	if hit_entity.is_in_group(&"Enemy"):
 		if hit_entity in _invalid_clash_targets:
 			return
-		set_deferred("monitoring", false)
-		set_deferred("monitorable", false)
-		get_tree().create_timer(0.5).timeout.connect(
-				func(): 
-					set_deferred("monitoring", true)
-					set_deferred("monitorable", true)
-		)
 		_invalid_clash_targets.append(hit_entity)
-		get_tree().create_timer(2.0).timeout.connect(func(): _invalid_clash_targets.erase(hit_entity))
+		hit_entity.tree_exited.connect(func(): _invalid_clash_targets.erase(hit_entity))
 		if emit_clash:
-			Game.clash(parent_rb.rpm_agent, hit_entity.rpm_agent)
+			Game.start_clash(parent_rb.rpm_agent, hit_entity.rpm_agent)

@@ -1,6 +1,8 @@
 extends RigidBody2D
 
 
+const ENEMY_EXPLOSION = preload("uid://b5wh5bhinuutg")
+
 @export var max_speed: float = 1000.0
 @export var gravity_force: float = 50.0
 @export var initial_spin_force: float = 5.0
@@ -40,11 +42,27 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 	
 	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 1000)
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
-	if angular_velocity <= 0.5:
-		linear_velocity = Vector2.ZERO
-		angular_velocity = 0.0
-		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
-		set_deferred("freeze", true)
+	if rpm_agent.rpm < 0.01:
+		stop_instant()
+
+
+func stop_instant() -> void:
+	linear_velocity = Vector2.ZERO
+	angular_velocity = 0.0
+	set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
+	set_deferred("freeze", true)
+	_gravity.body_entered.disconnect(_on_gravity_entered)
+	_gravity.body_exited.disconnect(_on_gravity_exited)
+	get_tree().create_timer(3.0).timeout.connect(queue_free)
+
+
+func kill() -> void:
+	var explosion := ENEMY_EXPLOSION.instantiate() as CPUParticles2D
+	explosion.global_position = global_position
+	get_parent().add_child(explosion)
+	stop_instant()
+	visible = false
+	#queue_free()
 
 
 func _on_gravity_entered(body: Node) -> void:

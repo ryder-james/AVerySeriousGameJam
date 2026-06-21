@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b5wh5bhinuutg"]
+
+[ext_resource type="Script" uid="uid://2itpyn5jwjbn" path="res://enemies/enemy_explosion.gd" id="1_c7bdt"]
+
+[node name="EnemyExplosion" type="CPUParticles2D" unique_id=1353453417]
+z_index = 100
+emitting = false
+amount = 60
+lifetime = 6.0
+one_shot = true
+explosiveness = 1.0
+spread = 20.0
+gravity = Vector2(-196, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 600.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+angle_max = 360.0
+scale_amount_max = 5.0
+script = ExtResource("1_c7bdt")

@@ -12,10 +12,10 @@ const Beyblade = preload("uid://dvgou34t5mt21")
 
 @warning_ignore("unused_signal")
 signal launch(power: float, angle: float)
+signal clash(player: RPMAgent, enemy: RPMAgent, result: ClashResult)
 
 var monies : int = 500
 var player_distance : int = 0
-var clash_result := ClashResult.UNCALCULATED
 var player: Beyblade = null:
 	set = set_player
 
@@ -33,16 +33,17 @@ func goto_game():
 	get_tree().change_scene_to_file("res://map.tscn")
 
 
-func clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
+func start_clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
 	var cam := get_tree().root.get_camera_2d()
 	var def_zoom := cam.zoom
 	var tween := create_tween()
 	tween.tween_property(cam, "zoom", Vector2.ONE, 0.1)
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	var clash_result := calculate_clash_results(player_rpm, enemy_rpm)
 	get_tree().paused = true
 	get_tree().create_timer(0.4, true).timeout.connect(
-			_unclash.bind(cam, def_zoom))
-	clash_result = calculate_clash_results(player_rpm, enemy_rpm)
+			_unclash.bind(cam, def_zoom, clash_result, enemy_rpm))
+	clash.emit(player_rpm, enemy_rpm, clash_result)
 
 
 func calculate_clash_results(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> ClashResult:
@@ -58,27 +59,21 @@ func calculate_clash_results(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> Clash
 	return ClashResult.PLAYER_LOSS
 
 
-func consume_clash_result(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> ClashResult:
-	if clash_result == ClashResult.UNCALCULATED:
-		return calculate_clash_results(player_rpm, enemy_rpm)
-	var result: ClashResult = clash_result
-	clash_result = ClashResult.UNCALCULATED
-	return result
-
-
 func set_player(new_player: Beyblade) -> void:
 	if player:
-		player.death.disconnect(_on_player_death)
+		player.die.disconnect(_on_player_died)
 	player = new_player
 	if player:
-		player.death.connect(_on_player_death)
+		player.die.connect(_on_player_died)
 
 
-func _on_player_death() -> void:
+func _on_player_died() -> void:
 	player.get_node("%EndRunMenu").visible = true
 
 
-func _unclash(camera: Camera2D, default_zoom: Vector2) -> void:
+func _unclash(camera: Camera2D, default_zoom: Vector2, clash_result: ClashResult, enemy: RPMAgent) -> void:
 	get_tree().paused = false
 	var tween := create_tween()
 	tween.tween_property(camera, "zoom", default_zoom, 0.1)
+	if clash_result == ClashResult.PLAYER_SUPER_VICTORY:
+		enemy.parent_rb.kill()

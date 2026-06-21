@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 
-signal death
+signal die
 
 
 @export var max_speed: float = 1000.0
@@ -9,11 +9,8 @@ signal death
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
 
-var _targets: Array[Node2D] = []
-
+@onready var _default_angular_damp: float = angular_damp
 @onready var rpm_agent: RPMAgent = %RPMAgent
-@onready var _gravity: Area2D = %Gravity
-@onready var _steering: SteeringController = %Steering
 
 
 func _ready() -> void:
@@ -24,10 +21,8 @@ func _ready() -> void:
 				apply_central_impulse((Vector2.RIGHT * speed).rotated(launch_angle))
 				process_mode = Node.PROCESS_MODE_INHERIT
 	)
+	Game.clash.connect(_on_clash)
 	Game.player = self
-	_gravity.body_entered.connect(_on_gravity_entered)
-	_gravity.body_exited.connect(_on_gravity_exited)
-	body_entered.connect(_on_hit)
 
 
 func _process(_delta: float) -> void:
@@ -36,40 +31,42 @@ func _process(_delta: float) -> void:
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
-	_steering.targets = _targets
-	apply_central_force(_steering.get_steering_vector(
-			gravity_force, _gravity.get_child(0).shape.radius, max_speed))
-	
 	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 1000)
 	linear_velocity.x = max(linear_velocity.x, -200)
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
-	if linear_velocity.length() < 10:
+	if linear_velocity.length() < 10 or rpm_agent.rpm < 0.01:
 		linear_velocity = Vector2.ZERO
 		angular_velocity = 0.0
-		death.emit()
+		die.emit()
 		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 		set_deferred("freeze", true)
 
 
-func _on_gravity_entered(body: Node) -> void:
-	if body.is_in_group(&"Beyblade") and not body in _targets:
-		_targets.append(body)
+func _on_clash(_player_rpm: RPMAgent, _enemy_rpm: RPMAgent, result: Game.ClashResult):
+	if result == Game.ClashResult.PLAYER_SUPER_VICTORY:
+		_on_enemy_killed()
+	elif result == Game.ClashResult.PLAYER_VICTORY:
+		body_entered.connect(_on_clash_kill)
+	else:
+		body_entered.connect(_on_clash_die)
 
 
-func _on_gravity_exited(body: Node) -> void:
-	if body in _targets:
-		_targets.erase(body)
-
-
-func _on_hit(body:Node) -> void:
+func _on_clash_kill(body: Node) -> void:
 	if body.is_in_group(&"Enemy"):
-		_strike_enemy(body as PhysicsBody2D)
+		body.angular_damp = 4.0
+		body.angular_damp_mode = DAMP_MODE_REPLACE
+		_on_enemy_killed()
+		body_entered.disconnect(_on_clash_kill)
 
 
-func _strike_enemy(enemy: Node) -> void:
-	enemy.angular_damp = 4.0
-	enemy.angular_damp_mode = DAMP_MODE_REPLACE
+func _on_clash_die(body: Node) -> void:
+	if body.is_in_group(&"Enemy"):
+		angular_damp = 4.0
+		body_entered.disconnect(_on_clash_die)
+
+
+func _on_enemy_killed() -> void:
 	angular_damp = 0.0
-	angular_velocity *= 1.3
-	linear_velocity *= 1.3
-	get_tree().create_timer(3.0).timeout.connect(func(): angular_damp = 1.0)
+	angular_velocity *= 3
+	linear_velocity *= 3
+	get_tree().create_timer(3.0).timeout.connect(func(): angular_damp = _default_angular_damp)

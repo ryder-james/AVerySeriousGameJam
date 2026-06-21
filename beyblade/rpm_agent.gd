@@ -10,7 +10,7 @@ var rpm: float:
 
 
 func get_rpm() -> float:
-	if not parent_rb:
+	if not parent_rb or not is_instance_valid(parent_rb):
 		return 0.0
 	
 	return floorf(parent_rb.angular_velocity / TAU * 100) * 0.01
