@@ -6,6 +6,10 @@ signal start_dash
 signal end_dash
 
 
+const DASH_RIGHT := deg_to_rad(0.0)
+const DASH_DOWN := deg_to_rad(45.0)
+const DASH_UP := -DASH_DOWN
+
 @export var max_speed: float = 1000.0
 @export var max_launch_power: float = 800.0
 @export var dash_strength: float = 500.0
@@ -14,6 +18,7 @@ signal end_dash
 @export var clash_detection_distance: float = 90.0
 
 var is_dashing := false
+var _preferred_dash_angle := DASH_RIGHT
 var _dash_tween: Tween = null
 var _dash_duration := 0.0
 
@@ -51,32 +56,41 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not is_dashing and event.is_action_pressed("launch"):
-		start_dash.emit()
-		is_dashing = true
-		_dash_duration = 1.0
-		_dash_tween = create_tween()
-		_dash_tween.set_ignore_time_scale(true)
-		_dash_tween.tween_property(self, "dash_duration", 0.0, max_dash_duration)
-		_dash_tween.finished.connect(_release_dash.bind(0.0))
-	elif is_dashing:
+	if is_dashing:
 		var release_dash := false
-		var dash_angle := 0.0
+		var dash_angle := DASH_RIGHT
 		if event.is_action_released("launch"):
 			release_dash = true
+			dash_angle = _preferred_dash_angle
 		elif event.is_action_pressed("ccw"):
-			dash_angle = deg_to_rad(-45.0)
+			dash_angle = DASH_UP
 			release_dash = true
 		elif event.is_action_pressed("cw"):
-			dash_angle = deg_to_rad(45.0)
+			dash_angle = DASH_DOWN
 			release_dash = true
 		if release_dash:
 			_release_dash(dash_angle)
+	else:
+		if event.is_action_pressed("launch"):
+			start_dash.emit()
+			is_dashing = true
+			_dash_duration = 1.0
+			_dash_tween = create_tween()
+			_dash_tween.set_ignore_time_scale(true)
+			_dash_tween.tween_property(self, "dash_duration", 0.0, max_dash_duration)
+			_dash_tween.finished.connect(_release_dash.bind(_preferred_dash_angle))
+		elif event.is_action_pressed("ccw"):
+			_preferred_dash_angle = DASH_UP
+		elif event.is_action_pressed("cw"):
+			_preferred_dash_angle = DASH_DOWN
+		elif event.is_action_released("ccw") or event.is_action_released("cw"):
+			_preferred_dash_angle = DASH_RIGHT
 
 
 func _release_dash(angle: float) -> void:
 	if _dash_tween:
 		_dash_tween.stop()
+	_preferred_dash_angle = 0.0
 	is_dashing = false
 	apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(angle))
 	end_dash.emit()
