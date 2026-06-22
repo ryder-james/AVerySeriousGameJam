@@ -36,6 +36,11 @@ func _ready() -> void:
 	_gravity.body_exited.connect(_on_gravity_exited)
 
 
+func _process(_delta: float) -> void:
+	if global_position.x < Game.player.global_position.x - 1000.0:
+		queue_free()
+
+
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 	apply_central_force(_steering.get_steering_vector(
 			gravity_force, _gravity.get_child(0).shape.radius, max_speed))
