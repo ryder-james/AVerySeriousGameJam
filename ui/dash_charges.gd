@@ -22,6 +22,7 @@ func _on_player_set(new_player: Beyblade) -> void:
 			child.queue_free()
 		_charges.clear()
 		_player.dash_start.disconnect(_on_dash)
+		_player.dash_instant.disconnect(_on_dash)
 		_player.dash_recharge.disconnect(_on_dash_recharged)
 	_player = new_player
 	if _player:
@@ -30,6 +31,7 @@ func _on_player_set(new_player: Beyblade) -> void:
 			_charges.append(charge)
 			add_child(charge)
 		_player.dash_start.connect(_on_dash)
+		_player.dash_instant.connect(_on_dash)
 		_player.dash_recharge.connect(_on_dash_recharged)
 
 

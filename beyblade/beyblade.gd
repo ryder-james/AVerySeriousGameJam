@@ -4,6 +4,7 @@ extends RigidBody2D
 
 signal die
 signal dash_start
+signal dash_instant
 signal dash_end
 signal dash_recharge
 
@@ -11,6 +12,7 @@ signal dash_recharge
 const DASH_RIGHT := deg_to_rad(0.0)
 const DASH_DOWN := deg_to_rad(45.0)
 const DASH_UP := -DASH_DOWN
+const DASH_HOLD_THRESHOLD := 0.1
 
 @export var max_speed: float = 1000.0
 @export var max_launch_power: float = 800.0
@@ -22,6 +24,7 @@ const DASH_UP := -DASH_DOWN
 var max_dash_charges: int = 1
 var is_dashing := false
 var dash_duration := 0.0
+var _dash_held_duration := 0.0
 var _preferred_dash_angle := DASH_RIGHT
 var _dash_tween: Tween = null
 
@@ -44,9 +47,13 @@ func _ready() -> void:
 	_dash_recharge_timer.timeout.connect(_on_dash_recharge)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if roundi(global_position.x / 100) > Game.player_distance:
 		Game.player_distance = roundi(global_position.x / 100)
+	if is_dashing:
+		_dash_held_duration += delta
+		if _dash_held_duration >= DASH_HOLD_THRESHOLD:
+			dash_start.emit()
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
@@ -75,13 +82,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			dash_angle = DASH_DOWN
 			release_dash = true
 		if release_dash:
+			if _dash_held_duration < DASH_HOLD_THRESHOLD:
+				dash_instant.emit()
 			_release_dash(dash_angle)
 	else:
 		if dash_charges > 0 and event.is_action_pressed("launch"):
 			dash_charges -= 1
-			dash_start.emit()
 			is_dashing = true
 			dash_duration = max_dash_duration
+			_dash_held_duration = 0.0
 			_dash_tween = create_tween()
 			_dash_tween.set_ignore_time_scale(true)
 			_dash_tween.tween_property(self, "dash_duration", 0.0, max_dash_duration)
