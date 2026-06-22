@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://qkqpa7huimdn"]
+
+[ext_resource type="Script" uid="uid://dtqhe4pkd4jeq" path="res://ui/ui_dash_charge.gd" id="1_1q13s"]
+[ext_resource type="Texture2D" uid="uid://ib1p14ivmjv6" path="res://ui/icons/dash_uncharged_icon.png" id="1_pspde"]
+[ext_resource type="Texture2D" uid="uid://d3yshb38cqhgu" path="res://ui/icons/dash_charged_icon.png" id="2_1q13s"]
+
+[node name="Charge" type="CenterContainer" unique_id=1029842814]
+script = ExtResource("1_1q13s")
+
+[node name="Progress" type="TextureProgressBar" parent="." unique_id=773535933]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+value = 100.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("1_pspde")
+texture_progress = ExtResource("2_1q13s")

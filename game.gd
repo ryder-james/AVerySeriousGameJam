@@ -8,10 +8,9 @@ enum ClashResult {
 	PLAYER_SUPER_VICTORY,
 }
 
-const Beyblade = preload("uid://dvgou34t5mt21")
-
 @warning_ignore("unused_signal")
 signal player_set(player: Beyblade)
+@warning_ignore("unused_signal")
 signal launch(power: float, angle: float)
 signal clash(player: RPMAgent, enemy: RPMAgent, result: ClashResult)
 
@@ -66,13 +65,13 @@ func calculate_clash_results(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> Clash
 func set_player(new_player: Beyblade) -> void:
 	if player:
 		player.die.disconnect(_on_player_died)
-		player.start_dash.disconnect(_on_dash_started)
-		player.end_dash.disconnect(_on_dash_ended)
+		player.dash_start.disconnect(_on_dash_started)
+		player.dash_end.disconnect(_on_dash_ended)
 	player = new_player
 	if player:
 		player.die.connect(_on_player_died)
-		player.start_dash.connect(_on_dash_started)
-		player.end_dash.connect(_on_dash_ended)
+		player.dash_start.connect(_on_dash_started)
+		player.dash_end.connect(_on_dash_ended)
 		camera = get_tree().root.get_camera_2d()
 		default_camera_zoom = camera.zoom
 		player_set.emit(player)

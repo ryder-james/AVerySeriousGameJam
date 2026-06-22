@@ -1,9 +1,11 @@
+class_name Beyblade
 extends RigidBody2D
 
 
 signal die
-signal start_dash
-signal end_dash
+signal dash_start
+signal dash_end
+signal dash_recharge
 
 
 const DASH_RIGHT := deg_to_rad(0.0)
@@ -17,13 +19,16 @@ const DASH_UP := -DASH_DOWN
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
 
+var max_dash_charges: int = 1
 var is_dashing := false
 var dash_duration := 0.0
 var _preferred_dash_angle := DASH_RIGHT
 var _dash_tween: Tween = null
 
 @onready var rpm_agent: RPMAgent = %RPMAgent
+@onready var dash_charges: int = max_dash_charges
 @onready var _default_angular_damp: float = angular_damp
+@onready var _dash_recharge_timer: Timer = %DashRechargeTimer
 
 
 func _ready() -> void:
@@ -36,6 +41,7 @@ func _ready() -> void:
 	)
 	Game.clash.connect(_on_clash)
 	Game.player = self
+	_dash_recharge_timer.timeout.connect(_on_dash_recharge)
 
 
 func _process(_delta: float) -> void:
@@ -71,8 +77,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if release_dash:
 			_release_dash(dash_angle)
 	else:
-		if event.is_action_pressed("launch"):
-			start_dash.emit()
+		if dash_charges > 0 and event.is_action_pressed("launch"):
+			dash_charges -= 1
+			dash_start.emit()
 			is_dashing = true
 			dash_duration = max_dash_duration
 			_dash_tween = create_tween()
@@ -93,7 +100,12 @@ func _release_dash(angle: float) -> void:
 	_preferred_dash_angle = 0.0
 	is_dashing = false
 	apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(angle))
-	end_dash.emit()
+	dash_end.emit()
+
+
+func _on_dash_recharge() -> void:
+	dash_charges = min(dash_charges + 1, max_dash_charges)
+	dash_recharge.emit()
 
 
 func _on_clash(_player_rpm: RPMAgent, _enemy_rpm: RPMAgent, result: Game.ClashResult):

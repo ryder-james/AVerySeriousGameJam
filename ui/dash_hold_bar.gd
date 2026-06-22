@@ -1,9 +1,6 @@
 extends ProgressBar
 
 
-const Beyblade = preload("uid://dvgou34t5mt21")
-
-
 var _player: Beyblade
 
 
@@ -24,12 +21,12 @@ func _process(_delta: float) -> void:
 
 func _on_player_set(new_player: Beyblade) -> void:
 	if _player:
-		_player.start_dash.disconnect(_on_dash_started)
-		_player.end_dash.disconnect(_on_dash_ended)
+		_player.dash_start.disconnect(_on_dash_started)
+		_player.dash_end.disconnect(_on_dash_ended)
 	_player = new_player
 	if _player:
-		_player.start_dash.connect(_on_dash_started)
-		_player.end_dash.connect(_on_dash_ended)
+		_player.dash_start.connect(_on_dash_started)
+		_player.dash_end.connect(_on_dash_ended)
 
 
 func _on_dash_started() -> void:

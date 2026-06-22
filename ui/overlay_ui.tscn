@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://by4wumt7yrhdh"]
 
 [ext_resource type="Script" uid="uid://15fhxexaijtj" path="res://ui/overlay_ui.gd" id="1_ygi30"]
+[ext_resource type="Script" uid="uid://du305qfadnnyf" path="res://ui/dash_charges.gd" id="2_5ti27"]
 [ext_resource type="Texture2D" uid="uid://r324o3jeddi6" path="res://ui/imgs/progress_bar_outline.png" id="2_g5hcj"]
 [ext_resource type="Texture2D" uid="uid://brml14clbpqdq" path="res://ui/imgs/progress_bar_fill.png" id="3_gjh5w"]
 [ext_resource type="Script" uid="uid://dsohgoo2xlggv" path="res://ui/dash_hold_bar.gd" id="4_gjh5w"]
@@ -27,6 +28,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ygi30")
+
+[node name="DashCharges" type="VBoxContainer" parent="." unique_id=344676690]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 60.0
+offset_bottom = 638.0
+alignment = 1
+script = ExtResource("2_5ti27")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1689893684]
 layout_mode = 1

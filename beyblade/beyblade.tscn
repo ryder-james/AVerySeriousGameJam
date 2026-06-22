@@ -54,3 +54,8 @@ emit_clash = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClashZone" unique_id=1266876625]
 shape = SubResource("CircleShape2D_ujo3m")
+
+[node name="DashRechargeTimer" type="Timer" parent="." unique_id=1284406729]
+unique_name_in_owner = true
+wait_time = 3.0
+autostart = true
