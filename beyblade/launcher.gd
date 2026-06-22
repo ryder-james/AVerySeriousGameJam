@@ -18,18 +18,19 @@ var _stopped: bool = false
 func _process(delta: float) -> void:
 	if not _stopped:
 		_launcher_selector.position.y = _get_sin() * max_offset
-	if Input.is_action_just_pressed("launch"):
-		if !_stopped:
-			_stopped = true
-			Game.launch.emit(_get_power(), _barrel.rotation)
-		else:
-			Game.reset_game()
 	if not _stopped and Input.is_action_pressed("ccw"):
 		_barrel.rotation -= rotation_speed * delta
 	elif not _stopped and Input.is_action_pressed("cw"):
 		_barrel.rotation += rotation_speed * delta
 	
 	_barrel.rotation = clamp(_barrel.rotation, -max_angle, max_angle)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("launch") and not _stopped:
+		_stopped = true
+		Game.launch.emit(_get_power(), _barrel.rotation)
+		get_viewport().set_input_as_handled()
 
 
 func _get_sin() -> float:

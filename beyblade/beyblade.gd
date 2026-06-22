@@ -1,16 +1,39 @@
+class_name Beyblade
 extends RigidBody2D
 
 
 signal die
+signal dash_start
+signal dash_instant
+signal dash_end
+signal dash_recharge
 
+
+const DASH_RIGHT := deg_to_rad(0.0)
+const DASH_DOWN := deg_to_rad(45.0)
+const DASH_UP := -DASH_DOWN
+const DASH_HOLD_THRESHOLD := 0.25
 
 @export var max_speed: float = 1000.0
 @export var max_launch_power: float = 800.0
+@export var dash_strength: float = 500.0
+@export var dash_recharge_time: float = 3.0
+@export var max_dash_duration: float = 1.0
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
 
-@onready var _default_angular_damp: float = angular_damp
+var max_dash_charges: int = 1
+var is_dashing := false
+var dash_duration := 0.0
+var dash_recharge_progress := 0.0
+var _dash_held_duration := 0.0
+var _preferred_dash_angle := DASH_RIGHT
+var _dash_tween: Tween = null
+
 @onready var rpm_agent: RPMAgent = %RPMAgent
+@onready var dash_charges: int = max_dash_charges
+@onready var _default_angular_damp: float = angular_damp
+@onready var _dash_recharge_timer: Timer = %DashRechargeTimer
 
 
 func _ready() -> void:
@@ -23,11 +46,20 @@ func _ready() -> void:
 	)
 	Game.clash.connect(_on_clash)
 	Game.player = self
+	_dash_recharge_timer.wait_time = dash_recharge_time
+	_dash_recharge_timer.timeout.connect(_on_dash_recharge)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if roundi(global_position.x / 100) > Game.player_distance:
 		Game.player_distance = roundi(global_position.x / 100)
+	if not _dash_recharge_timer.is_stopped():
+		var time_elapsed = _dash_recharge_timer.wait_time - _dash_recharge_timer.time_left
+		dash_recharge_progress = time_elapsed / _dash_recharge_timer.wait_time
+	if is_dashing:
+		_dash_held_duration += delta
+		if _dash_held_duration >= DASH_HOLD_THRESHOLD:
+			dash_start.emit()
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
@@ -40,6 +72,65 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 		die.emit()
 		set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 		set_deferred("freeze", true)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if is_dashing:
+		var release_dash := false
+		var dash_angle := DASH_RIGHT
+		if event.is_action_released("launch"):
+			release_dash = true
+			dash_angle = _preferred_dash_angle
+		elif event.is_action_pressed("ccw"):
+			dash_angle = DASH_UP
+			release_dash = true
+		elif event.is_action_pressed("cw"):
+			dash_angle = DASH_DOWN
+			release_dash = true
+		if release_dash:
+			if _dash_held_duration < DASH_HOLD_THRESHOLD:
+				dash_instant.emit()
+			_release_dash(dash_angle)
+	else:
+		if dash_charges > 0 and event.is_action_pressed("launch"):
+			is_dashing = true
+			dash_duration = max_dash_duration
+			_dash_held_duration = 0.0
+			_dash_tween = create_tween()
+			_dash_tween.set_ignore_time_scale(true)
+			_dash_tween.tween_property(self, "dash_duration", 0.0, max_dash_duration)
+			_dash_tween.finished.connect(_release_dash.bind(_preferred_dash_angle))
+		elif event.is_action_pressed("ccw"):
+			_preferred_dash_angle = DASH_UP
+		elif event.is_action_pressed("cw"):
+			_preferred_dash_angle = DASH_DOWN
+		elif event.is_action_released("ccw") or event.is_action_released("cw"):
+			_preferred_dash_angle = DASH_RIGHT
+
+
+func _release_dash(angle: float) -> void:
+	if _dash_tween:
+		_dash_tween.stop()
+	dash_charges -= 1
+	_preferred_dash_angle = 0.0
+	is_dashing = false
+	apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(angle))
+	_start_recharge()
+	dash_end.emit()
+
+
+func _on_dash_recharge() -> void:
+	dash_charges += 1
+	dash_recharge_progress = 0.0
+	dash_recharge.emit()
+	if dash_charges < max_dash_charges:
+		_start_recharge()
+
+
+func _start_recharge() -> void:
+	if not _dash_recharge_timer.is_stopped():
+		return
+	_dash_recharge_timer.start()
 
 
 func _on_clash(_player_rpm: RPMAgent, _enemy_rpm: RPMAgent, result: Game.ClashResult):
