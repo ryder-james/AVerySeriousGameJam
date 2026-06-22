@@ -16,6 +16,12 @@ func _ready() -> void:
 		Game.player_set.connect(_on_player_set)
 
 
+func _process(_delta: float) -> void:
+	if not _player or _player.dash_charges == _player.max_dash_charges:
+		return
+	_charges[_player.dash_charges].progress = _player.dash_recharge_progress
+
+
 func _on_player_set(new_player: Beyblade) -> void:
 	if _player:
 		for child in get_children():
@@ -23,21 +29,24 @@ func _on_player_set(new_player: Beyblade) -> void:
 		_charges.clear()
 		_player.dash_start.disconnect(_on_dash)
 		_player.dash_instant.disconnect(_on_dash)
-		_player.dash_recharge.disconnect(_on_dash_recharged)
+		_player.dash_recharge.disconnect(_on_dash_finished_recharge)
 	_player = new_player
 	if _player:
 		for i in _player.max_dash_charges:
 			var charge: UIDashCharge = DASH_CHARGE_SCENE.instantiate()
-			_charges.append(charge)
+			_charges.push_front(charge)
 			add_child(charge)
 		_player.dash_start.connect(_on_dash)
 		_player.dash_instant.connect(_on_dash)
-		_player.dash_recharge.connect(_on_dash_recharged)
+		_player.dash_recharge.connect(_on_dash_finished_recharge)
 
 
 func _on_dash() -> void:
-	_charges[_player.dash_charges].deplete()
+	if _player.dash_charges < _player.max_dash_charges:
+		_charges[_player.dash_charges].progress = 0.0
+	_charges[_player.dash_charges - 1].progress = _player.dash_recharge_progress
 
 
-func _on_dash_recharged() -> void:
-	_charges[_player.dash_charges - 1].charge()
+func _on_dash_finished_recharge() -> void:
+	pass
+	#_charges[_player.dash_charges - 1].progress = 1.0

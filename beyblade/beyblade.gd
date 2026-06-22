@@ -12,11 +12,12 @@ signal dash_recharge
 const DASH_RIGHT := deg_to_rad(0.0)
 const DASH_DOWN := deg_to_rad(45.0)
 const DASH_UP := -DASH_DOWN
-const DASH_HOLD_THRESHOLD := 0.1
+const DASH_HOLD_THRESHOLD := 0.25
 
 @export var max_speed: float = 1000.0
 @export var max_launch_power: float = 800.0
 @export var dash_strength: float = 500.0
+@export var dash_recharge_time: float = 3.0
 @export var max_dash_duration: float = 1.0
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
@@ -24,6 +25,7 @@ const DASH_HOLD_THRESHOLD := 0.1
 var max_dash_charges: int = 1
 var is_dashing := false
 var dash_duration := 0.0
+var dash_recharge_progress := 0.0
 var _dash_held_duration := 0.0
 var _preferred_dash_angle := DASH_RIGHT
 var _dash_tween: Tween = null
@@ -44,12 +46,16 @@ func _ready() -> void:
 	)
 	Game.clash.connect(_on_clash)
 	Game.player = self
+	_dash_recharge_timer.wait_time = dash_recharge_time
 	_dash_recharge_timer.timeout.connect(_on_dash_recharge)
 
 
 func _process(delta: float) -> void:
 	if roundi(global_position.x / 100) > Game.player_distance:
 		Game.player_distance = roundi(global_position.x / 100)
+	if not _dash_recharge_timer.is_stopped():
+		var time_elapsed = _dash_recharge_timer.wait_time - _dash_recharge_timer.time_left
+		dash_recharge_progress = time_elapsed / _dash_recharge_timer.wait_time
 	if is_dashing:
 		_dash_held_duration += delta
 		if _dash_held_duration >= DASH_HOLD_THRESHOLD:
@@ -87,7 +93,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_release_dash(dash_angle)
 	else:
 		if dash_charges > 0 and event.is_action_pressed("launch"):
-			dash_charges -= 1
 			is_dashing = true
 			dash_duration = max_dash_duration
 			_dash_held_duration = 0.0
@@ -106,15 +111,26 @@ func _unhandled_input(event: InputEvent) -> void:
 func _release_dash(angle: float) -> void:
 	if _dash_tween:
 		_dash_tween.stop()
+	dash_charges -= 1
 	_preferred_dash_angle = 0.0
 	is_dashing = false
 	apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(angle))
+	_start_recharge()
 	dash_end.emit()
 
 
 func _on_dash_recharge() -> void:
-	dash_charges = min(dash_charges + 1, max_dash_charges)
+	dash_charges += 1
+	dash_recharge_progress = 0.0
 	dash_recharge.emit()
+	if dash_charges < max_dash_charges:
+		_start_recharge()
+
+
+func _start_recharge() -> void:
+	if not _dash_recharge_timer.is_stopped():
+		return
+	_dash_recharge_timer.start()
 
 
 func _on_clash(_player_rpm: RPMAgent, _enemy_rpm: RPMAgent, result: Game.ClashResult):
