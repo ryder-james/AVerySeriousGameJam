@@ -63,6 +63,7 @@ func _process(delta: float) -> void:
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
+	angular_velocity = min(angular_velocity, 300 * TAU)
 	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 1000)
 	linear_velocity.x = max(linear_velocity.x, -200)
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
