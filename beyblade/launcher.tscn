@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b88xopbqawg6t" path="res://beyblade/launcher.gd" id="1_uy6ji"]
 [ext_resource type="Texture2D" uid="uid://do06tciq8ymv8" path="res://beyblade/launcher.png" id="2_bm0ek"]
-[ext_resource type="Texture2D" uid="uid://bck70l5ndvfq1" path="res://rectangle.png" id="3_6i4n2"]
+[ext_resource type="Texture2D" uid="uid://bck70l5ndvfq1" path="res://ui/imgs/rectangle.png" id="3_6i4n2"]
 [ext_resource type="Texture2D" uid="uid://bcbar8y8eil7j" path="res://icon.svg" id="4_rcfql"]
 
 [node name="Launcher" type="Node2D" unique_id=2113441394]

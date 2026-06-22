@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dhgk3hubrdxdw" path="res://beyblade/launcher.tscn" id="2_p5pve"]
 [ext_resource type="PackedScene" uid="uid://dc5slvb8uo1vp" path="res://enemies/enemy.tscn" id="4_p5pve"]
 [ext_resource type="PackedScene" uid="uid://cb1spbobf24cr" path="res://ui/end_run_menu.tscn" id="5_urblq"]
-[ext_resource type="Script" uid="uid://bec25h6mghuf7" path="res://enemy_spawner.gd" id="6_71pa8"]
+[ext_resource type="Script" uid="uid://bec25h6mghuf7" path="res://enemies/enemy_spawner.gd" id="6_71pa8"]
 [ext_resource type="PackedScene" uid="uid://by4wumt7yrhdh" path="res://ui/overlay_ui.tscn" id="6_iw27f"]
 [ext_resource type="Texture2D" uid="uid://cjwdr17fkjfje" path="res://bg.png" id="7_71pa8"]
 

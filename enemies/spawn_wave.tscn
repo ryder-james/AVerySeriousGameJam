@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ym2ktj501ff6"]
 
-[ext_resource type="Script" uid="uid://1iney1ypchxn" path="res://spawn_wave.gd" id="1_gnbwa"]
+[ext_resource type="Script" uid="uid://1iney1ypchxn" path="res://enemies/spawn_wave.gd" id="1_gnbwa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_71pa8"]
 size = Vector2(20, 800)
