@@ -12,6 +12,7 @@ enum ClashResult {
 signal player_set(player: Beyblade)
 @warning_ignore("unused_signal")
 signal launch(power: float, angle: float)
+signal end_run()
 signal clash(player: RPMAgent, enemy: RPMAgent, result: ClashResult)
 
 var camera: Camera2D
@@ -77,6 +78,7 @@ func set_player(new_player: Beyblade) -> void:
 
 func _on_player_died() -> void:
 	player.get_node("%EndRunMenu").visible = true
+	end_run.emit()
 
 
 func _on_dash_started() -> void:

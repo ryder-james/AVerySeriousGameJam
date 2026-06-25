@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://e3wi8rgoab4w"]
+
+[ext_resource type="Script" uid="uid://bpdpnhc0a1s5u" path="res://audio/music_handler.gd" id="1_msa2a"]
+[ext_resource type="AudioStream" uid="uid://0rpsnf26cpny" path="res://audio/music_tracks/Burn The World Waltz.mp3" id="2_31cpm"]
+[ext_resource type="AudioStream" uid="uid://c6gjjwr7dkdnp" path="res://audio/music_tracks/Vibing Over Venus.mp3" id="2_kcm8u"]
+[ext_resource type="AudioStream" uid="uid://cohdey4p2rhmc" path="res://audio/music_tracks/El Magicia.mp3" id="3_kcm8u"]
+[ext_resource type="AudioStream" uid="uid://dt3yc72l05rdj" path="res://audio/music_tracks/Summon the Rawk.mp3" id="4_m56ex"]
+
+[node name="MusicHandler" type="Node2D" unique_id=1779933460]
+process_mode = 3
+script = ExtResource("1_msa2a")
+idle_track = ExtResource("2_kcm8u")
+active_tracks = Array[AudioStream]([ExtResource("2_31cpm"), ExtResource("3_kcm8u"), ExtResource("4_m56ex")])
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=967310966]
+unique_name_in_owner = true
+bus = &"Music"

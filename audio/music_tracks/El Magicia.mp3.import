@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cohdey4p2rhmc"
+path="res://.godot/imported/El Magicia.mp3-3d9465e3e0bec6c4064ebfa0bf71c508.mp3str"
+
+[deps]
+
+source_file="res://audio/music_tracks/El Magicia.mp3"
+dest_files=["res://.godot/imported/El Magicia.mp3-3d9465e3e0bec6c4064ebfa0bf71c508.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
