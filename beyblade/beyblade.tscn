@@ -59,3 +59,8 @@ shape = SubResource("CircleShape2D_ujo3m")
 unique_name_in_owner = true
 wait_time = 3.0
 one_shot = true
+
+[node name="DashInvulnTimer" type="Timer" parent="." unique_id=15212137]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
