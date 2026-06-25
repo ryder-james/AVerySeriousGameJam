@@ -56,8 +56,10 @@ func stop_instant() -> void:
 	angular_velocity = 0.0
 	set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 	set_deferred("freeze", true)
-	_gravity.body_entered.disconnect(_on_gravity_entered)
-	_gravity.body_exited.disconnect(_on_gravity_exited)
+	if _gravity.body_entered.is_connected(_on_gravity_entered):
+		_gravity.body_entered.disconnect(_on_gravity_entered)
+	if _gravity.body_exited.is_connected(_on_gravity_exited):
+		_gravity.body_exited.disconnect(_on_gravity_exited)
 	get_tree().create_timer(3.0).timeout.connect(queue_free)
 
 
