@@ -23,17 +23,20 @@ const DASH_HOLD_THRESHOLD := 0.25
 @export var clash_detection_distance: float = 90.0
 
 var max_dash_charges: int = 1
-var is_dashing := false
 var dash_duration := 0.0
 var dash_recharge_progress := 0.0
+var is_dash_invulnerable := false
+var _is_holding_dash := false
 var _dash_held_duration := 0.0
 var _preferred_dash_angle := DASH_RIGHT
 var _dash_tween: Tween = null
+var _damping_to_max_angular_velocity := false
 
 @onready var rpm_agent: RPMAgent = %RPMAgent
 @onready var dash_charges: int = max_dash_charges
 @onready var _default_angular_damp: float = angular_damp
 @onready var _dash_recharge_timer: Timer = %DashRechargeTimer
+@onready var _dash_invuln_timer: Timer = %DashInvulnTimer
 
 
 func _ready() -> void:
@@ -48,6 +51,7 @@ func _ready() -> void:
 	Game.player = self
 	_dash_recharge_timer.wait_time = dash_recharge_time
 	_dash_recharge_timer.timeout.connect(_on_dash_recharge)
+	_dash_invuln_timer.timeout.connect(func(): is_dash_invulnerable = false)
 
 
 func _process(delta: float) -> void:
@@ -56,14 +60,20 @@ func _process(delta: float) -> void:
 	if not _dash_recharge_timer.is_stopped():
 		var time_elapsed = _dash_recharge_timer.wait_time - _dash_recharge_timer.time_left
 		dash_recharge_progress = time_elapsed / _dash_recharge_timer.wait_time
-	if is_dashing:
+	if _is_holding_dash:
 		_dash_held_duration += delta
 		if _dash_held_duration >= DASH_HOLD_THRESHOLD:
 			dash_start.emit()
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
-	angular_velocity = min(angular_velocity, 300 * TAU)
+	if angular_velocity >= 300 * TAU:
+		var damping := minf(4.0, absf(300 * TAU - angular_velocity))
+		angular_damp = 1 + damping
+		_damping_to_max_angular_velocity = true
+	elif _damping_to_max_angular_velocity:
+		angular_damp = _default_angular_damp
+		_damping_to_max_angular_velocity = false
 	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 1000)
 	linear_velocity.x = max(linear_velocity.x, -200)
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
@@ -76,7 +86,7 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if is_dashing:
+	if _is_holding_dash:
 		var release_dash := false
 		var dash_angle := DASH_RIGHT
 		if event.is_action_released("launch"):
@@ -94,7 +104,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_release_dash(dash_angle)
 	else:
 		if dash_charges > 0 and event.is_action_pressed("launch"):
-			is_dashing = true
+			_is_holding_dash = true
 			dash_duration = max_dash_duration
 			_dash_held_duration = 0.0
 			_dash_tween = create_tween()
@@ -114,10 +124,14 @@ func _release_dash(angle: float) -> void:
 		_dash_tween.stop()
 	dash_charges -= 1
 	_preferred_dash_angle = 0.0
-	is_dashing = false
+	_is_holding_dash = false
 	apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(angle))
 	_start_recharge()
 	dash_end.emit()
+	if not _dash_invuln_timer.is_stopped():
+		_dash_invuln_timer.stop()
+	_dash_invuln_timer.start()
+	is_dash_invulnerable = true
 
 
 func _on_dash_recharge() -> void:
@@ -159,6 +173,7 @@ func _on_clash_die(body: Node) -> void:
 
 func _on_enemy_killed() -> void:
 	angular_damp = 0.0
-	angular_velocity *= 3
-	linear_velocity *= 3
+	if angular_velocity <= 300 * TAU:
+		apply_torque_impulse(dash_strength * 0.25)
+	linear_velocity *= 2
 	get_tree().create_timer(3.0).timeout.connect(func(): angular_damp = _default_angular_damp)
