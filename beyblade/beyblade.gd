@@ -21,6 +21,7 @@ const DASH_HOLD_THRESHOLD := 0.25
 @export var max_dash_duration: float = 1.0
 @export var gravity_force: float = 50.0
 @export var clash_detection_distance: float = 90.0
+@export var max_angular_velocity := 300.0
 
 var max_dash_charges: int = 1
 var dash_duration := 0.0
@@ -67,8 +68,8 @@ func _process(delta: float) -> void:
 
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
-	if angular_velocity >= 300 * TAU:
-		var damping := minf(4.0, absf(300 * TAU - angular_velocity))
+	if angular_velocity >= max_angular_velocity * TAU:
+		var damping := minf(4.0, absf(max_angular_velocity * TAU - angular_velocity))
 		angular_damp = 1 + damping
 		_damping_to_max_angular_velocity = true
 	elif _damping_to_max_angular_velocity:
@@ -173,7 +174,7 @@ func _on_clash_die(body: Node) -> void:
 
 func _on_enemy_killed() -> void:
 	angular_damp = 0.0
-	if angular_velocity <= 300 * TAU:
+	if angular_velocity <= max_angular_velocity * TAU:
 		apply_torque_impulse(dash_strength * 0.25)
 	linear_velocity *= 2
 	get_tree().create_timer(3.0).timeout.connect(func(): angular_damp = _default_angular_damp)
