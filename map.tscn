@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bwpfbwm75cowr" path="res://beyblade/beyblade.tscn" id="1_e0an3"]
 [ext_resource type="PackedScene" uid="uid://dhgk3hubrdxdw" path="res://beyblade/launcher.tscn" id="2_p5pve"]
+[ext_resource type="Script" uid="uid://inm2qoiu10wn" path="res://background.gd" id="3_05x41"]
 [ext_resource type="PackedScene" uid="uid://dc5slvb8uo1vp" path="res://enemies/enemy.tscn" id="4_p5pve"]
 [ext_resource type="PackedScene" uid="uid://cb1spbobf24cr" path="res://ui/end_run_menu.tscn" id="5_urblq"]
 [ext_resource type="Script" uid="uid://bec25h6mghuf7" path="res://enemies/enemy_spawner.gd" id="6_71pa8"]
@@ -33,6 +34,23 @@ layer = 100
 unique_name_in_owner = true
 visible = false
 
+[node name="Background" type="Node2D" parent="." unique_id=593304210 node_paths=PackedStringArray("left_bg", "right_bg")]
+script = ExtResource("3_05x41")
+left_bg = NodePath("BGLeft")
+right_bg = NodePath("BGRight")
+stage_colors = Array[Color]([Color(1, 1, 1, 1), Color(0, 0.7411765, 0, 1), Color(0.8745098, 0.6509804, 0, 1), Color(0.66720665, 0, 0.034073252, 1), Color(0, 0, 0.75686276, 1), Color(0.61, 0, 0.5185, 1), Color(1, 0.30980393, 0, 1)])
+
+[node name="BGLeft" type="Sprite2D" parent="Background" unique_id=680863578]
+z_index = -1000
+position = Vector2(7500, 0)
+texture = ExtResource("7_71pa8")
+
+[node name="BGRight" type="Sprite2D" parent="Background" unique_id=234830416]
+z_index = -1000
+position = Vector2(23500, 0)
+rotation = -3.1415925
+texture = ExtResource("7_71pa8")
+
 [node name="Beyblade" parent="." unique_id=414612044 instance=ExtResource("1_e0an3")]
 process_mode = 4
 position = Vector2(136, 0)
@@ -53,17 +71,6 @@ physics_material_override = SubResource("PhysicsMaterial_71pa8")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="WallBottom" unique_id=1110991680]
 shape = SubResource("WorldBoundaryShape2D_71pa8")
-
-[node name="Bg" type="Sprite2D" parent="." unique_id=680863578]
-z_index = -1000
-position = Vector2(7500, 0)
-texture = ExtResource("7_71pa8")
-
-[node name="Bg" type="Sprite2D" parent="Bg" unique_id=234830416]
-z_index = -1000
-position = Vector2(16000, 0)
-rotation = 3.1415927
-texture = ExtResource("7_71pa8")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=987482769]
 position = Vector2(91, 0)
