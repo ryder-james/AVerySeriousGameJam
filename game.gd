@@ -40,10 +40,10 @@ func goto_game():
 
 func start_clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
 	var clash_result := calculate_clash_results(player_rpm, enemy_rpm)
-	#_zoom_in()
-	#get_tree().paused = true
-	#get_tree().create_timer(0.4, true).timeout.connect(
-			#_unclash.bind(clash_result, enemy_rpm))
+	_zoom_in()
+	get_tree().paused = true
+	get_tree().create_timer(0.4, true).timeout.connect(
+			_unclash.bind(clash_result, enemy_rpm))
 	if clash_result == ClashResult.PLAYER_SUPER_VICTORY:
 		enemy_rpm.parent_rb.kill()
 	clash.emit(player_rpm, enemy_rpm, clash_result)
@@ -82,13 +82,15 @@ func _on_player_died() -> void:
 
 
 func _on_dash_started() -> void:
-	Engine.time_scale = 0.25
-	_zoom_in()
+	#Engine.time_scale = 0.25
+	#_zoom_in()
+	pass
 
 
 func _on_dash_ended() -> void:
-	Engine.time_scale = 1.0
-	_zoom_out()
+	#Engine.time_scale = 1.0
+	#_zoom_out()
+	pass
 
 
 func _zoom_in(new_zoom := Vector2.ONE) -> void:
