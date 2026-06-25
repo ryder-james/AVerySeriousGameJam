@@ -51,7 +51,7 @@ func start_clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
 
 func calculate_clash_results(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> ClashResult:
 	var victory_chance: float = player_rpm.rpm / enemy_rpm.rpm
-	if victory_chance >= 2 or player_rpm.parent_rb.is_dashing:
+	if victory_chance >= 2 or player_rpm.parent_rb.is_dash_invulnerable:
 		return ClashResult.PLAYER_SUPER_VICTORY
 	elif victory_chance >= 1:
 		return ClashResult.PLAYER_VICTORY
