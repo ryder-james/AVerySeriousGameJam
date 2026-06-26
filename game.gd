@@ -24,6 +24,8 @@ var player: Beyblade = null:
 	set = set_player
 
 var upgrade_purchase_counts: Dictionary = {}
+var _config := ConfigFile.new()
+const CONFIG_PATH := "user://config.cfg"
 
 var upgrade_values: Dictionary = {
 	"center": 1.0,
@@ -32,6 +34,15 @@ var upgrade_values: Dictionary = {
 	"initial_speed": 100.0,
 	"initial_spin": 1.0,
 }
+
+
+func _ready() -> void:
+	var err := _config.load(CONFIG_PATH)
+	if err != OK:
+		return
+	for key: String in upgrade_values.keys():
+		upgrade_purchase_counts[key] = _config.get_value("Upgrades", key, 0)
+	monies = _config.get_value("Score", "monies", 150)
 
 func reset_game() -> void:
 	reload_game_vars()
@@ -102,6 +113,8 @@ func set_player(new_player: Beyblade) -> void:
 
 func _on_player_died() -> void:
 	calc_monies()
+	_config.set_value("Score", "monies", monies)
+	_config.save(CONFIG_PATH)
 	player.get_node("%EndRunMenu").visible = true
 	end_run.emit()
 
@@ -168,6 +181,26 @@ func purchase_shop_upgrade(upgrade_key: String, cost: int, added_value: float) -
 
 	upgrade_purchase_counts[upgrade_key] += 1
 	upgrade_values[upgrade_key] += added_value
+	_config.set_value("Upgrades", upgrade_key, upgrade_purchase_counts[upgrade_key])
+	_config.set_value("Score", "monies", monies)
+	_config.save(CONFIG_PATH)
+
+
+func get_custom_pref(key: String, default_val: Variant) -> Variant:
+	return _config.get_value("Prefs", key, default_val)
+
+
+func save_custom_pref(key: String, val: Variant) -> void:
+	_config.set_value("Prefs", key, val)
+	_config.save(CONFIG_PATH)
+
+
+func clear_save() -> void:
+	_config.clear()
+	for key: String in upgrade_purchase_counts.keys():
+		upgrade_purchase_counts[key] = _config.get_value("Upgrades", key, 0)
+	monies = _config.get_value("Score", "monies", 150)
+	_config.save(CONFIG_PATH)
 
 
 func get_upgrade_purchase_count(upgrade_key: StringName) -> int:

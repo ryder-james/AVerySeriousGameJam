@@ -75,8 +75,38 @@ test_sound = NodePath("Clack")
 stream = ExtResource("3_wk0pr")
 bus = &"Sound FX"
 
+[node name="ClearSave" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer" unique_id=910245689]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Clear Save"
+
 [node name="Back" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer" unique_id=1766744566]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Back"
+
+[node name="AreYouSurePopup" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=1621250842]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/AreYouSurePopup" unique_id=2010345848]
+layout_mode = 2
+text = "Are you sure?"
+horizontal_alignment = 1
+
+[node name="Yes" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/AreYouSurePopup" unique_id=455067949]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Clear 'em"
+
+[node name="No" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/AreYouSurePopup" unique_id=1243407881]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Nevermind"

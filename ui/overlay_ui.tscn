@@ -107,5 +107,5 @@ size_flags_horizontal = 3
 text = "Monies: 500"
 fit_content = true
 autowrap_mode = 0
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 1

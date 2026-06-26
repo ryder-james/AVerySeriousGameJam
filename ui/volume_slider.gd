@@ -22,9 +22,12 @@ func _ready() -> void:
 	_slider.value_changed.connect(func(new_value: float) -> void:
 			AudioServer.set_bus_volume_linear(_bus_idx, new_value)
 			_num_label.text = str(new_value * 100.0)
+			Game.save_custom_pref("%s_Vol" % bus, new_value)
 			if test_sound:
 				_test_countdown = MAX_COUNTDOWN
 	)
+	_slider.value = Game.get_custom_pref("%s_Vol" % bus, 1.0)
+	_num_label.text = str(_slider.value * 100.0)
 
 
 func _process(delta: float) -> void:
