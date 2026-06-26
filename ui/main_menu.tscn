@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://djx0audro2pmg"]
 
 [ext_resource type="Script" uid="uid://cp3tostk70tky" path="res://ui/main_menu.gd" id="1_t7e0r"]
+[ext_resource type="PackedScene" uid="uid://cwy1lpyhcr7u6" path="res://ui/volume_slider.tscn" id="2_0dkrt"]
 
 [node name="MainMenu" type="Node2D" unique_id=394547681]
 script = ExtResource("1_t7e0r")
@@ -28,19 +29,49 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 70
 text = "[GAME NAME]"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=397214826]
+[node name="MainButtons" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=397214826]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 10
 
-[node name="Start" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=560747583]
+[node name="Start" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/MainButtons" unique_id=560747583]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Start"
 
-[node name="Settings" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=2000951847]
+[node name="Settings" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/MainButtons" unique_id=2000951847]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Settings"
+
+[node name="SettingsContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=1800669200]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+
+[node name="MainVolumeSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer" unique_id=654478040 instance=ExtResource("2_0dkrt")]
+layout_mode = 2
+slider_name = "Main Volume"
+bus = &"Master"
+
+[node name="MusicVolume" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer" unique_id=313363760 instance=ExtResource("2_0dkrt")]
+layout_mode = 2
+slider_name = "Music Volume"
+bus = &"Music"
+base_db_offset = -6.0
+
+[node name="SFXVolume" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer" unique_id=843530657 instance=ExtResource("2_0dkrt")]
+layout_mode = 2
+slider_name = "SFX Volume"
+bus = &"Sound FX"
+
+[node name="Back" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer" unique_id=1766744566]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Back"
