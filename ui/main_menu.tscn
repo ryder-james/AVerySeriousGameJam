@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cp3tostk70tky" path="res://ui/main_menu.gd" id="1_t7e0r"]
 [ext_resource type="PackedScene" uid="uid://cwy1lpyhcr7u6" path="res://ui/volume_slider.tscn" id="2_0dkrt"]
+[ext_resource type="AudioStream" uid="uid://c3fhq2v0t6in3" path="res://audio/clack.wav" id="3_wk0pr"]
 
 [node name="MainMenu" type="Node2D" unique_id=394547681]
 script = ExtResource("1_t7e0r")
@@ -64,9 +65,14 @@ layout_mode = 2
 slider_name = "Music Volume"
 bus = &"Music"
 
-[node name="SFXVolume" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer" unique_id=843530657 instance=ExtResource("2_0dkrt")]
+[node name="SFXVolume" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer" unique_id=843530657 node_paths=PackedStringArray("test_sound") instance=ExtResource("2_0dkrt")]
 layout_mode = 2
 slider_name = "SFX Volume"
+bus = &"Sound FX"
+test_sound = NodePath("Clack")
+
+[node name="Clack" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer/SFXVolume" unique_id=988087965]
+stream = ExtResource("3_wk0pr")
 bus = &"Sound FX"
 
 [node name="Back" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer" unique_id=1766744566]
