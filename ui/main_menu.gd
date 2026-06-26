@@ -9,6 +9,6 @@ func _start() -> void:
 	Game.goto_game()
 	
 	
-func _show_settings(show: bool):
-	%MainButtons.visible = not show
-	%SettingsContainer.visible = show
+func _show_settings(show_settings: bool):
+	%MainButtons.visible = not show_settings
+	%SettingsContainer.visible = show_settings

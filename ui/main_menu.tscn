@@ -63,7 +63,6 @@ bus = &"Master"
 layout_mode = 2
 slider_name = "Music Volume"
 bus = &"Music"
-base_db_offset = -6.0
 
 [node name="SFXVolume" parent="CanvasLayer/MarginContainer/VBoxContainer/SettingsContainer" unique_id=843530657 instance=ExtResource("2_0dkrt")]
 layout_mode = 2
