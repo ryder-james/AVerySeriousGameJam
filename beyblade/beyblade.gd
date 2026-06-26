@@ -155,9 +155,11 @@ func _on_clash(_player_rpm: RPMAgent, _enemy_rpm: RPMAgent, result: Game.ClashRe
 	if result == Game.ClashResult.PLAYER_SUPER_VICTORY:
 		_on_enemy_killed()
 	elif result == Game.ClashResult.PLAYER_VICTORY:
-		body_entered.connect(_on_clash_kill)
+		if not body_entered.is_connected(_on_clash_kill):
+			body_entered.connect(_on_clash_kill)
 	else:
-		body_entered.connect(_on_clash_die)
+		if not body_entered.is_connected(_on_clash_die):
+			body_entered.connect(_on_clash_die)
 
 
 func _on_clash_kill(body: Node) -> void:
