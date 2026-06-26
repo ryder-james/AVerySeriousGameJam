@@ -58,7 +58,7 @@ func calc_monies():
 		else:
 			monies += (player_distance - distance_record)
 		distance_record = player_distance
-	monies += roundi(player_distance/10)
+	monies += roundi(player_distance/10.0)
 
 func start_clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
 	var clash_result := calculate_clash_results(player_rpm, enemy_rpm)
