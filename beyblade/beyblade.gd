@@ -179,6 +179,6 @@ func _on_clash_die(body: Node) -> void:
 func _on_enemy_killed() -> void:
 	angular_damp = 0.0
 	if angular_velocity <= max_angular_velocity * TAU:
-		apply_torque_impulse(dash_strength * 0.25)
+		apply_torque_impulse(20)
 	linear_velocity *= 2
-	get_tree().create_timer(3.0).timeout.connect(func(): angular_damp = _default_angular_damp)
+	get_tree().create_timer(1.0).timeout.connect(func(): angular_damp = _default_angular_damp)
