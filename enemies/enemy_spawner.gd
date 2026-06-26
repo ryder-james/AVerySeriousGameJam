@@ -37,4 +37,3 @@ func _calc_next_enemy_spawn() -> void:
 	var dist: float = Game.player_distance
 	var dist_to_next := maxf(-2.0 ** (dist/800) + 80.0, 20.0)
 	_next_spawn_x = Game.player_distance + dist_to_next
-	print(_next_spawn_x)
