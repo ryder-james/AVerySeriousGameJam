@@ -17,27 +17,48 @@ signal clash(player: RPMAgent, enemy: RPMAgent, result: ClashResult)
 
 var camera: Camera2D
 var default_camera_zoom := Vector2.ZERO
-var monies : int = 500
+var monies : int = 150
 var player_distance : int = 0
+var distance_record : int = 0
 var player: Beyblade = null:
 	set = set_player
 
+var upgrade_purchase_counts: Dictionary = {}
+
+var upgrade_values: Dictionary = {
+	"center": 1.0,
+	"ring": 0.0,
+	"rim": 1.0,
+	"initial_speed": 100.0,
+	"initial_spin": 1.0,
+}
 
 func reset_game() -> void:
-	player_distance = 0
-	Engine.time_scale = 1.0
+	reload_game_vars()
 	get_tree().reload_current_scene()
 
 
 func enter_shop():
-	Engine.time_scale = 1.0
+	reload_game_vars()
 	get_tree().change_scene_to_file("res://ui/shop_menu.tscn")
 
 
 func goto_game():
-	Engine.time_scale = 1.0
+	reload_game_vars()
 	get_tree().change_scene_to_file("res://map.tscn")
 
+func reload_game_vars() -> void:
+	player_distance = 0
+	Engine.time_scale = 1.0
+
+func calc_monies():
+	if player_distance > distance_record:
+		if player_distance > 200:
+			monies += (player_distance - distance_record) * 5
+		else:
+			monies += (player_distance - distance_record)
+		distance_record = player_distance
+	monies += roundi(player_distance/10)
 
 func start_clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
 	var clash_result := calculate_clash_results(player_rpm, enemy_rpm)
@@ -47,14 +68,19 @@ func start_clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
 
 
 func calculate_clash_results(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> ClashResult:
-	var victory_chance: float = player_rpm.rpm / enemy_rpm.rpm
-	if victory_chance >= 2 or player_rpm.parent_rb.is_dash_invulnerable:
+	var victory_chance: float = (player_rpm.rpm * get_upgrade_value("rim")) / enemy_rpm.rpm
+	if player_rpm.parent_rb.is_dash_invulnerable:
+		victory_chance = (player_rpm.rpm * get_upgrade_value("rim") * 2.5) / enemy_rpm.rpm
+	if victory_chance >= 2:
+		monies += 100
 		return ClashResult.PLAYER_SUPER_VICTORY
 	elif victory_chance >= 1:
+		monies += 50
 		return ClashResult.PLAYER_VICTORY
 	else:
 		var victory_roll: float = randf()
 		if victory_roll <= victory_chance:
+			monies += 25
 			return ClashResult.PLAYER_VICTORY
 	return ClashResult.PLAYER_LOSS
 
@@ -75,6 +101,7 @@ func set_player(new_player: Beyblade) -> void:
 
 
 func _on_player_died() -> void:
+	calc_monies()
 	player.get_node("%EndRunMenu").visible = true
 	end_run.emit()
 
@@ -125,3 +152,31 @@ func _unclash(enemy: RPMAgent) -> void:
 	get_tree().paused = false
 	_zoom_out()
 	enemy.parent_rb.kill()
+
+
+func purchase_shop_upgrade(upgrade_key: String, cost: int, added_value: float) -> void:
+	if monies < cost:
+		return
+
+	monies -= cost
+
+	if not upgrade_purchase_counts.has(upgrade_key):
+		upgrade_purchase_counts[upgrade_key] = 0
+
+	if not upgrade_values.has(upgrade_key):
+		upgrade_values[upgrade_key] = 0.0
+
+	upgrade_purchase_counts[upgrade_key] += 1
+	upgrade_values[upgrade_key] += added_value
+
+
+func get_upgrade_purchase_count(upgrade_key: StringName) -> int:
+	return upgrade_purchase_counts.get(upgrade_key, 0)
+
+
+func get_upgrade_value(upgrade_key: StringName) -> float:
+	return upgrade_values.get(upgrade_key, 0.0)
+
+
+func get_all_upgrade_values() -> Dictionary:
+	return upgrade_values.duplicate()

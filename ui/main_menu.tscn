@@ -26,8 +26,8 @@ theme_override_constants/separation = 150
 
 [node name="GameName" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=1276223407]
 layout_mode = 2
-theme_override_font_sizes/font_size = 70
-text = "[GAME NAME]"
+theme_override_font_sizes/font_size = 50
+text = "A Deeply Serious Game About Spinning a Top"
 
 [node name="MainButtons" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=397214826]
 unique_name_in_owner = true

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://i41jrfkg4187"
-path="res://.godot/imported/launcher.png-95ccf8db818f743a53ecd189e110a3d2.ctex"
+uid="uid://bs63qmi4qp2sq"
+path="res://.godot/imported/buy_icon_on.png-d559d0b2008bf85533e6ba4b62898347.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://beyblade/launcher.png"
-dest_files=["res://.godot/imported/launcher.png-95ccf8db818f743a53ecd189e110a3d2.ctex"]
+source_file="res://ui/icons/buy_icon_on.png"
+dest_files=["res://.godot/imported/buy_icon_on.png-d559d0b2008bf85533e6ba4b62898347.ctex"]
 
 [params]
 
