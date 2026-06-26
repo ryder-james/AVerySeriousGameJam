@@ -53,7 +53,10 @@ func reload_game_vars() -> void:
 
 func calc_monies():
 	if player_distance > distance_record:
-		monies += player_distance - distance_record
+		if player_distance > 200:
+			monies += (player_distance - distance_record) * 5
+		else:
+			monies += (player_distance - distance_record)
 		distance_record = player_distance
 	monies += roundi(player_distance/10)
 
@@ -67,7 +70,7 @@ func start_clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
 func calculate_clash_results(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> ClashResult:
 	var victory_chance: float = (player_rpm.rpm * get_upgrade_value("rim")) / enemy_rpm.rpm
 	if player_rpm.parent_rb.is_dash_invulnerable:
-		victory_chance = (player_rpm.rpm * get_upgrade_value("rim") * 2) / enemy_rpm.rpm
+		victory_chance = (player_rpm.rpm * get_upgrade_value("rim") * 2.5) / enemy_rpm.rpm
 	if victory_chance >= 2:
 		monies += 100
 		return ClashResult.PLAYER_SUPER_VICTORY
@@ -148,8 +151,7 @@ func _do_clash(enemy_rpm: RPMAgent) -> void:
 func _unclash(enemy: RPMAgent) -> void:
 	get_tree().paused = false
 	_zoom_out()
-	if clash_result == ClashResult.PLAYER_SUPER_VICTORY:
-		enemy.parent_rb.kill()
+	enemy.parent_rb.kill()
 
 
 func purchase_shop_upgrade(upgrade_key: String, cost: int, added_value: float) -> void:

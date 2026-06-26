@@ -88,7 +88,8 @@ display_name = "Launch Spin"
 description = "Initial Spin"
 icon_texture = ExtResource("4_jdy6d")
 initial_value = 1.0
-increase_value = 0.5
+increase_value = 2.0
+value_multiplier = 1.5
 initial_cost = 250
 
 [node name="TopUpgrades" type="FoldableContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent" unique_id=951573687]
@@ -102,10 +103,11 @@ layout_mode = 2
 layout_mode = 2
 upgrade_key = "center"
 display_name = "Top Center"
-description = "Spin Momentum"
+description = "Better Dash"
 icon_texture = ExtResource("5_ck0cc")
 initial_value = 1.0
 increase_value = 0.5
+value_multiplier = 1.0
 value_prefix = "x"
 value_decimal_places = 2
 cost_multiplier = 3.0

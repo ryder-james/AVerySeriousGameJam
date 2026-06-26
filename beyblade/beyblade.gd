@@ -14,8 +14,8 @@ const DASH_DOWN := deg_to_rad(45.0)
 const DASH_UP := -DASH_DOWN
 const DASH_HOLD_THRESHOLD := 0.25
 
-@export var max_speed: float = 1000.0
-@export var max_launch_power: float = 200.0
+@export var max_speed: float = 1000.0 + Game.get_upgrade_value("initial_speed")
+@export var max_launch_power: float = 400.0
 @export var dash_strength: float = 500.0
 @export var dash_recharge_time: float = 3.0
 @export var max_dash_duration: float = 1.0
@@ -132,8 +132,8 @@ func _release_dash(angle: float) -> void:
 	dash_charges -= 1
 	_preferred_dash_angle = 0.0
 	_is_holding_dash = false
-	apply_torque_impulse(dash_strength/700)
-	apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(angle))
+	apply_torque_impulse(dash_strength * Game.get_upgrade_value("center")/1000)
+	apply_central_impulse((Vector2.RIGHT * dash_strength * Game.get_upgrade_value("center")).rotated(angle))
 	_start_recharge()
 	dash_end.emit()
 	if not _dash_invuln_timer.is_stopped():
@@ -189,5 +189,5 @@ func _on_enemy_killed() -> void:
 	angular_damp = 0.0
 	if angular_velocity <= max_angular_velocity * TAU:
 		apply_torque_impulse(angular_velocity/(15 - (Game.get_upgrade_value("ring")/10)))
-	linear_velocity *= 1 + (Game.get_upgrade_value("ring")/100)
+	linear_velocity *= 1.2 + (Game.get_upgrade_value("ring")/100)
 	get_tree().create_timer(0.5).timeout.connect(func(): angular_damp = _default_angular_damp)
