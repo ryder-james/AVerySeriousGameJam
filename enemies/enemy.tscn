@@ -28,6 +28,7 @@ gravity_scale = -0.2
 inertia = 0.25
 script = ExtResource("1_4gyqm")
 gravity_force = 200.0
+death_messages = Array[String](["Take it one step at a time.", "You are capable and ready.", "Drink some water.", "Don't forget to take breaks.", "You can rest if you need to.", "Don't spin yourself out.", "You are enough.", "I have 4 children!", "When it's time, you'll know.", "You're doing better than you think.", "Keep your head up.", "Trust yourself.", "Be gentle with yourself.", "Breathe. Relax.", "Keep pushing forward.", "Inertia is a property of matter.", "Just keep spinning...", "Don't leave my top child a top orphan!", "Entropy is Relentless.", "Kindness is a war of its own."])
 
 [node name="Visual" type="Sprite2D" parent="." unique_id=1297228985]
 unique_name_in_owner = true
@@ -85,3 +86,29 @@ text = "54"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_07tka")
+
+[node name="DeathMessage" type="Label" parent="." unique_id=2097306460]
+unique_name_in_owner = true
+process_mode = 3
+top_level = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -876.0
+offset_top = -439.0
+offset_right = -276.0
+offset_bottom = -367.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_position = Vector2(-25, -38.775)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "Don't Burn Yourself Out"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
