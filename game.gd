@@ -41,10 +41,12 @@ func goto_game():
 
 func start_clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
 	var clash_result := calculate_clash_results(player_rpm, enemy_rpm)
-	_zoom_in()
-	get_tree().paused = true
-	get_tree().create_timer(0.4, true).timeout.connect(
-			_unclash.bind(clash_result, enemy_rpm))
+	if clash_result == ClashResult.PLAYER_SUPER_VICTORY:
+		_zoom_in()
+		player.shockwave.play()
+		get_tree().paused = true
+		get_tree().create_timer(0.4, true).timeout.connect(
+				_unclash.bind(clash_result, enemy_rpm))
 	clash.emit(player_rpm, enemy_rpm, clash_result)
 
 

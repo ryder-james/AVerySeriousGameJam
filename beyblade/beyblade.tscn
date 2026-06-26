@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://dvgou34t5mt21" path="res://beyblade/beyblade.gd" id="1_e03yv"]
 [ext_resource type="Texture2D" uid="uid://dabo0338qsvno" path="res://beyblade/skins/base_beyblade.png" id="2_83moc"]
 [ext_resource type="Script" uid="uid://dbu3n8xx0l4ha" path="res://beyblade/rpm_agent.gd" id="4_83moc"]
+[ext_resource type="AudioStream" uid="uid://c3fhq2v0t6in3" path="res://audio/clack.wav" id="5_8drnb"]
 [ext_resource type="Script" uid="uid://dsbp3hu7pirey" path="res://beyblade/clash_zone.gd" id="5_fgq4a"]
+[ext_resource type="AudioStream" uid="uid://2gn4whj0n5fy" path="res://audio/shockwave.wav" id="6_8drnb"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gqbix"]
 friction = 0.0
@@ -64,3 +66,13 @@ one_shot = true
 unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
+
+[node name="Clack" type="AudioStreamPlayer" parent="." unique_id=298437914]
+unique_name_in_owner = true
+stream = ExtResource("5_8drnb")
+bus = &"Sound FX"
+
+[node name="Shockwave" type="AudioStreamPlayer" parent="." unique_id=343061188]
+unique_name_in_owner = true
+process_mode = 3
+stream = ExtResource("6_8drnb")

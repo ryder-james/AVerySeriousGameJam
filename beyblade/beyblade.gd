@@ -35,9 +35,11 @@ var _damping_to_max_angular_velocity := false
 
 @onready var rpm_agent: RPMAgent = %RPMAgent
 @onready var dash_charges: int = max_dash_charges
+@onready var shockwave: AudioStreamPlayer = %Shockwave
 @onready var _default_angular_damp: float = angular_damp
 @onready var _dash_recharge_timer: Timer = %DashRechargeTimer
 @onready var _dash_invuln_timer: Timer = %DashInvulnTimer
+@onready var _clack: AudioStreamPlayer = %Clack
 
 
 func _ready() -> void:
@@ -164,6 +166,8 @@ func _on_clash_kill(body: Node) -> void:
 		body.angular_damp_mode = DAMP_MODE_REPLACE
 		_on_enemy_killed()
 		body_entered.disconnect(_on_clash_kill)
+		_clack.pitch_scale = randf_range(0.8, 1.2)
+		_clack.play()
 
 
 func _on_clash_die(body: Node) -> void:

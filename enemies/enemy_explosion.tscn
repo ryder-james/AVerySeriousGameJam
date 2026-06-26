@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b5wh5bhinuutg"]
 
 [ext_resource type="Script" uid="uid://2itpyn5jwjbn" path="res://enemies/enemy_explosion.gd" id="1_c7bdt"]
+[ext_resource type="AudioStream" uid="uid://cm846sjhfd70n" path="res://audio/explosion.wav" id="2_81l4l"]
 
 [node name="EnemyExplosion" type="CPUParticles2D" unique_id=1353453417]
 z_index = 100
@@ -18,3 +19,8 @@ angular_velocity_max = 360.0
 angle_max = 360.0
 scale_amount_max = 5.0
 script = ExtResource("1_c7bdt")
+
+[node name="Explosion" type="AudioStreamPlayer" parent="." unique_id=785764158]
+stream = ExtResource("2_81l4l")
+autoplay = true
+bus = &"Sound FX"
