@@ -14,8 +14,8 @@ const DASH_DOWN := deg_to_rad(45.0)
 const DASH_UP := -DASH_DOWN
 const DASH_HOLD_THRESHOLD := 0.25
 
-@export var max_speed: float = 1000.0
-@export var max_launch_power: float = 800.0
+@export var max_speed: float = 1000.0 + Game.get_upgrade_value("initial_speed")
+@export var max_launch_power: float = 400.0
 @export var dash_strength: float = 500.0
 @export var dash_recharge_time: float = 3.0
 @export var max_dash_duration: float = 1.0
@@ -45,8 +45,9 @@ var _damping_to_max_angular_velocity := false
 func _ready() -> void:
 	Game.launch.connect(
 			func(power: float, launch_angle: float):
-				var speed = power * max_launch_power
-				apply_torque_impulse(speed/50)
+				var speed = power * (max_launch_power + Game.get_upgrade_value("initial_speed"))
+				var spin : float = (power * 5) + Game.get_upgrade_value("initial_spin")
+				apply_torque_impulse(spin)
 				apply_central_impulse((Vector2.RIGHT * speed).rotated(launch_angle))
 				process_mode = Node.PROCESS_MODE_INHERIT
 	)
@@ -77,9 +78,12 @@ func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 	elif _damping_to_max_angular_velocity:
 		angular_damp = _default_angular_damp
 		_damping_to_max_angular_velocity = false
-	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 1000)
+	elif rpm_agent.rpm <= 0.9:
+		angular_damp *= 1.08
+	var allowable_speed: float = min(max_speed, abs(angular_velocity) * 100)
 	linear_velocity.x = max(linear_velocity.x, -200)
 	linear_velocity = linear_velocity.limit_length(allowable_speed)
+	
 	if linear_velocity.length() < 10 or rpm_agent.rpm < 0.01:
 		linear_velocity = Vector2.ZERO
 		angular_velocity = 0.0
@@ -128,7 +132,8 @@ func _release_dash(angle: float) -> void:
 	dash_charges -= 1
 	_preferred_dash_angle = 0.0
 	_is_holding_dash = false
-	apply_central_impulse((Vector2.RIGHT * dash_strength).rotated(angle))
+	apply_torque_impulse(dash_strength * Game.get_upgrade_value("center")/1000)
+	apply_central_impulse((Vector2.RIGHT * dash_strength * Game.get_upgrade_value("center")).rotated(angle))
 	_start_recharge()
 	dash_end.emit()
 	if not _dash_invuln_timer.is_stopped():
@@ -183,6 +188,6 @@ func _on_clash_die(body: Node) -> void:
 func _on_enemy_killed() -> void:
 	angular_damp = 0.0
 	if angular_velocity <= max_angular_velocity * TAU:
-		apply_torque_impulse(20)
-	linear_velocity *= 2
-	get_tree().create_timer(1.0).timeout.connect(func(): angular_damp = _default_angular_damp)
+		apply_torque_impulse(angular_velocity/(15 - (Game.get_upgrade_value("ring")/10)))
+	linear_velocity *= 1.2 + (Game.get_upgrade_value("ring")/100)
+	get_tree().create_timer(0.5).timeout.connect(func(): angular_damp = _default_angular_damp)
