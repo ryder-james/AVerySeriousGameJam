@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://coth0afsssikg" path="res://ui/imgs/shop_banner.png" id="1_6evd7"]
 [ext_resource type="Script" uid="uid://cj7ygmtr2bxy2" path="res://ui/shop_menu.gd" id="1_du5fs"]
-[ext_resource type="Texture2D" uid="uid://ciwv2ue4b2qry" path="res://ui/icons/launchspeed_icon.png" id="2_7t64a"]
-[ext_resource type="Texture2D" uid="uid://bwhl8ap5l5m0f" path="res://ui/icons/buy_icon.png" id="3_flcvk"]
+[ext_resource type="PackedScene" uid="uid://07pvl868r6fw" path="res://ui/ShopUpgrade.tscn" id="3_du5fs"]
 [ext_resource type="Texture2D" uid="uid://c6eqqaqekpojx" path="res://ui/icons/launchspin_icon.png" id="4_jdy6d"]
+[ext_resource type="Texture2D" uid="uid://ciwv2ue4b2qry" path="res://ui/icons/launchspeed_icon.png" id="4_winol"]
 [ext_resource type="Texture2D" uid="uid://cgqhadkjo6hhs" path="res://ui/icons/center_icon.png" id="5_ck0cc"]
 [ext_resource type="Texture2D" uid="uid://oognkoac8mma" path="res://ui/icons/ring_icon.png" id="6_du5fs"]
 [ext_resource type="Texture2D" uid="uid://b4diiqe3rdo76" path="res://ui/icons/rim_icon.png" id="7_winol"]
@@ -59,66 +59,37 @@ size_flags_horizontal = 3
 
 [node name="LauncherUpgrades" type="FoldableContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent" unique_id=601135049]
 layout_mode = 2
-folded = true
 title = "Launcher Upgrades"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades" unique_id=1722843119]
-visible = false
 layout_mode = 2
 
-[node name="LaunchSpeed" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer" unique_id=23245523]
+[node name="LaunchSpeed" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer" unique_id=1136094717 instance=ExtResource("3_du5fs")]
 layout_mode = 2
-theme_override_constants/separation = 80
+upgrade_key = "initial_speed"
+display_name = "Launch Speed"
+description = "Starting speed from launcher"
+icon_texture = ExtResource("4_winol")
+initial_value = 100.0
+increase_value = 100.0
+value_multiplier = 1.1
+cost_multiplier = 1.2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpeed" unique_id=166117019]
-layout_mode = 2
-texture = ExtResource("2_7t64a")
+[node name="Value" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpeed" index="3" unique_id=595938823]
+text = "10"
 
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpeed" unique_id=277223924]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Launch Speed"
+[node name="Next" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpeed" index="4" unique_id=1719234620]
+text = "(MAX)"
 
-[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpeed" unique_id=1485166391]
+[node name="LaunchSpin" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer" unique_id=1365167458 instance=ExtResource("3_du5fs")]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Initial Launch Speed 10 (MAX)"
-
-[node name="Label3" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpeed" unique_id=836583920]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "100"
-
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpeed" unique_id=1923154471]
-layout_mode = 2
-texture_normal = ExtResource("3_flcvk")
-
-[node name="LaunchSpin" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer" unique_id=2067242539]
-layout_mode = 2
-theme_override_constants/separation = 80
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpin" unique_id=965745860]
-layout_mode = 2
-texture = ExtResource("4_jdy6d")
-
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpin" unique_id=1794542382]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Launch Spin"
-
-[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpin" unique_id=1709884628]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Initial Launch RPM 200 (+20)"
-
-[node name="Label3" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpin" unique_id=152621142]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "100"
-
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpin" unique_id=420799249]
-layout_mode = 2
-texture_normal = ExtResource("3_flcvk")
+upgrade_key = "initial_spin"
+display_name = "Launch Spin"
+description = "Initial Spin"
+icon_texture = ExtResource("4_jdy6d")
+initial_value = 1.0
+increase_value = 0.5
+initial_cost = 250
 
 [node name="TopUpgrades" type="FoldableContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent" unique_id=951573687]
 layout_mode = 2
@@ -127,87 +98,42 @@ title = "\"Top\" Upgrades"
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades" unique_id=1937019812]
 layout_mode = 2
 
-[node name="TopCenter" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer" unique_id=1348401201]
+[node name="Center" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer" unique_id=319067532 instance=ExtResource("3_du5fs")]
 layout_mode = 2
-theme_override_constants/separation = 80
+upgrade_key = "center"
+display_name = "Top Center"
+description = "Spin Momentum"
+icon_texture = ExtResource("5_ck0cc")
+initial_value = 1.0
+increase_value = 0.5
+value_prefix = "x"
+value_decimal_places = 2
+cost_multiplier = 3.0
+max_purchases = 5
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopCenter" unique_id=1628882415]
+[node name="Ring" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer" unique_id=565903496 instance=ExtResource("3_du5fs")]
 layout_mode = 2
-texture = ExtResource("5_ck0cc")
+upgrade_key = "ring"
+display_name = "Top Ring"
+description = "Better Clash Gains"
+icon_texture = ExtResource("6_du5fs")
+initial_value = 0.0
+increase_value = 10.0
+value_multiplier = 1.0
+value_suffix = "%"
 
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopCenter" unique_id=793407605]
+[node name="Rim" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer" unique_id=794486073 instance=ExtResource("3_du5fs")]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Center"
-
-[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopCenter" unique_id=606430108]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Spin Decay Rate 10 (-2)"
-
-[node name="Label3" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopCenter" unique_id=1900613400]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "100"
-
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopCenter" unique_id=1662540745]
-layout_mode = 2
-texture_normal = ExtResource("3_flcvk")
-
-[node name="TopRing" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer" unique_id=890205734]
-layout_mode = 2
-theme_override_constants/separation = 80
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopRing" unique_id=1288854467]
-layout_mode = 2
-texture = ExtResource("6_du5fs")
-
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopRing" unique_id=811657238]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Ring"
-
-[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopRing" unique_id=2068696482]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Clash Momentum 60% (+10)"
-
-[node name="Label3" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopRing" unique_id=208793116]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "100
-"
-
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopRing" unique_id=59621561]
-layout_mode = 2
-texture_normal = ExtResource("3_flcvk")
-
-[node name="TopRim" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer" unique_id=1477946440]
-layout_mode = 2
-theme_override_constants/separation = 80
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopRim" unique_id=2008953575]
-layout_mode = 2
-texture = ExtResource("7_winol")
-
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopRim" unique_id=624537047]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Rim"
-
-[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopRim" unique_id=1427943867]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Clash Effectivness 10 (+2)"
-
-[node name="Label3" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopRim" unique_id=1409744685]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "100"
-
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/TopUpgrades/VBoxContainer/TopRim" unique_id=1030607767]
-layout_mode = 2
-texture_normal = ExtResource("3_flcvk")
+display_name = "Top Rim"
+description = "Stronger Clash Damage"
+icon_texture = ExtResource("7_winol")
+initial_value = 1.0
+increase_value = 0.05
+value_multiplier = 1.5
+value_prefix = "x"
+value_decimal_places = 2
+initial_cost = 200
+max_purchases = 12
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=2011552431]
 layout_mode = 2
@@ -220,6 +146,9 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Start Run"
 
-[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=76737940]
+[node name="Monies" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=76737940]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Monies: 1200"
+
+[editable path="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/ShopContent/LauncherUpgrades/VBoxContainer/LaunchSpeed"]
