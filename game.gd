@@ -60,11 +60,7 @@ func calc_monies():
 func start_clash(player_rpm: RPMAgent, enemy_rpm: RPMAgent) -> void:
 	var clash_result := calculate_clash_results(player_rpm, enemy_rpm)
 	if clash_result == ClashResult.PLAYER_SUPER_VICTORY:
-		_zoom_in()
-		player.shockwave.play()
-		get_tree().paused = true
-		get_tree().create_timer(0.4, true).timeout.connect(
-				_unclash.bind(clash_result, enemy_rpm))
+		_do_clash(enemy_rpm)
 	clash.emit(player_rpm, enemy_rpm, clash_result)
 
 
@@ -133,7 +129,23 @@ func _zoom_out() -> void:
 	tween.set_ignore_time_scale(true)
 
 
-func _unclash(clash_result: ClashResult, enemy: RPMAgent) -> void:
+func _do_clash(enemy_rpm: RPMAgent) -> void:
+	_zoom_in()
+	player.shockwave.play()
+	get_tree().paused = true
+	var enemy = enemy_rpm.parent_rb
+	
+	var tween := create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.set_ignore_time_scale(true)
+	tween.tween_property(enemy.death_message, "visible_ratio", 1.0, 0.5)
+	tween.finished.connect(func() -> void:
+			get_tree().create_timer(0.5, true).timeout.connect(
+				_unclash.bind(enemy_rpm))
+	)
+
+
+func _unclash(enemy: RPMAgent) -> void:
 	get_tree().paused = false
 	_zoom_out()
 	if clash_result == ClashResult.PLAYER_SUPER_VICTORY:

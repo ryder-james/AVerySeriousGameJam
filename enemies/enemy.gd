@@ -6,15 +6,18 @@ const ENEMY_EXPLOSION = preload("uid://b5wh5bhinuutg")
 @export var max_speed: float = 1000.0
 @export var gravity_force: float = 50.0
 @export var initial_spin_force: float = 5.0
+@export var death_messages: Array[String] = []
 
 var _targets := []
 
+@onready var death_message: Label = %DeathMessage
 @onready var rpm_agent: RPMAgent = %RPMAgent
 @onready var _gravity: Area2D = %Gravity
 @onready var _steering: SteeringController = %Steering
 
 
 func _ready() -> void:
+	death_message.text = death_messages.pick_random()
 	# I got to this function by just playing around in Desmos until I liked the
 	#   multipliers I saw. They are magic numbers in the most literal sense.
 	# Takes the form of a((D / b)^2) + 1, where D is how far the player has
@@ -37,6 +40,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	death_message.global_position = global_position - Vector2(300.0, 115.0)
 	if global_position.x < Game.player.global_position.x - 1000.0:
 		queue_free()
 
