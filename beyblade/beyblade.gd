@@ -174,6 +174,8 @@ func _on_clash_die(body: Node) -> void:
 	if body.is_in_group(&"Enemy"):
 		angular_damp = 4.0
 		body_entered.disconnect(_on_clash_die)
+		_clack.pitch_scale = randf_range(0.8, 1.2)
+		_clack.play()
 
 
 func _on_enemy_killed() -> void:
