@@ -26,7 +26,7 @@ func _ready() -> void:
 			if test_sound:
 				_test_countdown = MAX_COUNTDOWN
 	)
-	_slider.value = Game.get_custom_pref("%s_Vol" % bus, 1.0)
+	_slider.set_value_no_signal(Game.get_custom_pref("%s_Vol" % bus, 1.0))
 	_num_label.text = str(_slider.value * 100.0)
 
 
